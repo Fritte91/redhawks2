@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0c0a09;
+    color: #fafaf9;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+  }
+
+  /* Hide Scrollbar */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Custom Selection */
+  ::selection {
+    background-color: #b91c1c;
+    color: white;
+  }
+
+  /* Subtle Pattern for Native Theme */
+  .pattern-native {
+    background-image: radial-gradient(#78350f 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Map Dark Mode Filter */
+  .map-dark {
+    filter: grayscale(100%) invert(92%) contrast(83%);
+  }
+}
+
