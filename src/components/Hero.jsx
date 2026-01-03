@@ -2,13 +2,13 @@ import React from 'react'
 
 const Hero = () => {
   return (
-    <header className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-20">
+    <header className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
           src="/2.jpg" 
           alt="Fire and Smoke" 
-          className="w-full h-full object-cover opacity-40 grayscale contrast-125"
+          className="w-full h-full object-cover opacity-40 contrast-125"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/80 to-transparent"></div>
         <div className="absolute inset-0 pattern-native opacity-10"></div>
