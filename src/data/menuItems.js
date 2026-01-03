@@ -8,7 +8,7 @@ export const menuItems = [
     category: "burgers",
     prices: { beef: 129, pork: 79, chicken: 79 },
     description: "",
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop",
+    image: "/cheese.png",
     tags: ["burger"],
   },
   {
@@ -17,7 +17,7 @@ export const menuItems = [
     category: "burgers",
     prices: { beef: 189, pork: 148, chicken: 148 },
     description: "",
-    image: "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop",
+    image: "/smoked.png",
     tags: ["burger"],
   },
   {
@@ -26,7 +26,7 @@ export const menuItems = [
     category: "burgers",
     prices: { beef: 196, pork: 169, chicken: 169 },
     description: "",
-    image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=800&auto=format&fit=crop",
+    image: "/jalapeno.png",
     tags: ["burger", "spicy"],
   },
   {
@@ -35,7 +35,7 @@ export const menuItems = [
     category: "burgers",
     prices: { beef: 199, pork: 156, chicken: 156 },
     description: "",
-    image: "https://images.unsplash.com/photo-1561758033-d89a9ad46330?q=80&w=800&auto=format&fit=crop",
+    image: "/bacon.png",
     tags: ["burger"],
   },
   {
@@ -44,7 +44,7 @@ export const menuItems = [
     category: "burgers",
     prices: { beef: 199, pork: 169, chicken: 169 },
     description: "",
-    image: "https://images.unsplash.com/photo-1550317138-10000687a72b?q=80&w=800&auto=format&fit=crop",
+    image: "/slaw.png",
     tags: ["burger"],
   },
   {
@@ -53,7 +53,7 @@ export const menuItems = [
     category: "burgers",
     prices: { chicken: 89 },
     description: "",
-    image: "https://images.unsplash.com/photo-1610970878459-a0e464d7592b?q=80&w=800&auto=format&fit=crop",
+    image: "/pheonix.png",
     tags: ["burger"],
   },
   {
@@ -62,7 +62,7 @@ export const menuItems = [
     category: "wraps",
     prices: { pork: 99, chicken: 99 },
     description: "",
-    image: "https://images.unsplash.com/photo-1529059997568-3d847b1154f0?q=80&w=800&auto=format&fit=crop",
+    image: "/street.png",
     tags: ["kebab"],
   },
   {
@@ -71,7 +71,7 @@ export const menuItems = [
     category: "wraps",
     prices: { pork: 129, chicken: 129 },
     description: "",
-    image: "https://images.unsplash.com/photo-1625944525533-473f1a3b8b7f?q=80&w=800&auto=format&fit=crop",
+    image: "/gyro.png",
     tags: ["gyro"],
   },
   {
@@ -80,7 +80,7 @@ export const menuItems = [
     category: "wraps",
     prices: { beef: 169 },
     description: "Sauce, mashed potato, shredded salad & pickles",
-    image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=800&auto=format&fit=crop",
+    image: "/flatbread.png",
     tags: ["flatbread"],
   },
   {
@@ -89,7 +89,7 @@ export const menuItems = [
     category: "wraps",
     prices: { beef: 156 },
     description: "",
-    image: "https://images.unsplash.com/photo-1604909052878-7b7e87b4b4fb?q=80&w=800&auto=format&fit=crop",
+    image: "/doner.png",
     tags: ["doner"],
   },
   {
@@ -98,7 +98,7 @@ export const menuItems = [
     category: "wraps",
     prices: { single: 129 },
     description: "",
-    image: "https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=800&auto=format&fit=crop",
+    image: "/shrimp.png",
     tags: ["shrimp"],
   },
   {
@@ -107,7 +107,7 @@ export const menuItems = [
     category: "wraps",
     prices: { beef: 149, pork: 129, chicken: 129 },
     description: "",
-    image: "https://images.unsplash.com/photo-1626078298402-1fd2d4a7a7f5?q=80&w=800&auto=format&fit=crop",
+    image: "/golden.png",
     tags: ["pita", "doner"],
   },
   {
@@ -116,7 +116,7 @@ export const menuItems = [
     category: "plates",
     prices: { beef: 179, pork: 169, chicken: 169 },
     description: "",
-    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=800&auto=format&fit=crop",
+    image: "/kebabtallrik.png",
     tags: ["plate"],
   },
   {
@@ -125,7 +125,7 @@ export const menuItems = [
     category: "plates",
     prices: { single: 159 },
     description: "Large grilled sausage with sauce",
-    image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=800&auto=format&fit=crop",
+    image: "/xxl.png",
     tags: ["sausage"],
   },
   {
@@ -134,7 +134,7 @@ export const menuItems = [
     category: "plates",
     prices: { single: 219 },
     description: "Caramelized onions & meatballs",
-    image: "https://images.unsplash.com/photo-1604908177453-7462950a6a64?q=80&w=800&auto=format&fit=crop",
+    image: "/patties.png",
     tags: ["swedish"],
   },
   {
@@ -143,7 +143,7 @@ export const menuItems = [
     category: "plates",
     prices: { single: 239 },
     description: "Cream sauce & mashed potatoes",
-    image: "https://images.unsplash.com/photo-1604909053713-2b51d2d5d6ad?q=80&w=800&auto=format&fit=crop",
+    image: "/meatballs.png",
     tags: ["swedish"],
   },
   {
@@ -152,7 +152,7 @@ export const menuItems = [
     category: "sides",
     prices: { single: 40 },
     description: "",
-    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=800&auto=format&fit=crop",
+    image: "/fries.png",
     tags: ["fries"],
   },
   {
@@ -161,7 +161,7 @@ export const menuItems = [
     category: "extras",
     prices: { beef: 69, chicken: 49, pork: 49 },
     description: "",
-    image: "https://images.unsplash.com/photo-1550547660-7b3a5f7a8b1e?q=80&w=800&auto=format&fit=crop",
+    image: "/patty.png",
     tags: ["extra"],
   },
 ];

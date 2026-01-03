@@ -127,6 +127,11 @@ const Menu = () => {
                   alt={item.name}
                   className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105 filter contrast-110 saturate-[0.9]"
                   loading="lazy"
+                  key={`${item.id}-${item.image}`}
+                  onError={(e) => {
+                    console.error(`Failed to load image: ${item.image}`, item.name)
+                    e.target.style.display = 'none'
+                  }}
                 />
                 {/* Badge */}
                 {item.badge && (
