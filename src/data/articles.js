@@ -10,7 +10,7 @@ export const articles = [
       "But our chipotle sauce isn't just about the peppers. We blend them with roasted garlic, a hint of lime, and a secret combination of spices that we've refined over countless iterations. The final product is a sauce that elevates everything it touches—from our signature burgers to our flame-grilled kebabs.",
       "This sauce represents more than flavor; it represents our commitment to sourcing the best ingredients and honoring traditional methods. Every bottle tells the story of the desert, the fire, and the dedication to craft that defines RedHawk."
     ],
-    image: "https://images.unsplash.com/photo-1596524430615-b46476ddc6aa?q=80&w=1200&auto=format&fit=crop",
+    image: "/art1.png",
     category: "Recipes",
     date: "OCT 12, 2024",
     readTime: "5 MIN READ",
@@ -29,7 +29,7 @@ export const articles = [
       "Our commitment to the communal experience extends beyond our physical space. We host monthly community dinners where we partner with local organizations to bring people together. We've seen these events spark conversations, build bridges, and create lasting friendships.",
       "In a world that often feels disconnected, the simple act of sharing a meal can be revolutionary. At RedHawk, we're not just serving food—we're serving community, one plate at a time."
     ],
-    image: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=1200&auto=format&fit=crop",
+    image: "/art2.png",
     category: "Culture",
     date: "SEP 28, 2024",
     readTime: "3 MIN READ",
@@ -47,8 +47,7 @@ export const articles = [
       "But what makes our kebabs truly special is the finishing touch. As the meat comes off the spit, we slice it fresh, still hot and juicy, and serve it immediately. Whether it's wrapped in fresh flatbread or served over rice, every bite carries the essence of the fire.",
       "This ancient technique, perfected over millennia, is now a cornerstone of the RedHawk experience. It's a reminder that the best food comes from methods that have stood the test of time, adapted for the modern palate but never losing their soul."
     ],
-    image: "https://images.unsplash.com/photo-1542344807-167bb33c1626?q=80&w=1200&auto=format&fit=crop",
-    category: "Origin",
+    image: "/art3.png",
     date: "SEP 15, 2024",
     readTime: "4 MIN READ",
     featured: false,
@@ -66,7 +65,7 @@ export const articles = [
       "After 24 hours, the transformation is complete. The meat that goes into the marinade is good. The meat that comes out is exceptional. It's tender, flavorful, and ready for the fire. The marinade has done its work, and now it's time for the flames to add their own magic.",
       "This process can't be rushed. We've tried shorter marination times, but the results never match the depth and complexity of our 24-hour method. It's a commitment to quality that defines everything we do at RedHawk."
     ],
-    image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
+    image: "/art4.png",
     category: "Recipes",
     date: "AUG 30, 2024",
     readTime: "6 MIN READ",
@@ -85,8 +84,7 @@ export const articles = [
       "This approach to sourcing isn't always the easiest or cheapest option, but it's the only way we know how to operate. Every ingredient that comes into our kitchen has been chosen with care, and every relationship we build with a producer strengthens our commitment to quality.",
       "When you taste a RedHawk burger or kebab, you're tasting the result of these relationships. You're tasting the care that went into raising the cattle, growing the vegetables, and sourcing the spices. It's a difference you can taste, and it's a difference we're proud to serve."
     ],
-    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1200&auto=format&fit=crop",
-    category: "Culture",
+    image: "/art5.png",
     date: "AUG 18, 2024",
     readTime: "4 MIN READ",
     featured: false,
@@ -104,7 +102,7 @@ export const articles = [
       "The result is a burger that's crispy on the edges, juicy in the middle, and packed with flavor. It's a technique that honors the simplicity of great ingredients while elevating them through perfect execution.",
       "This is the RedHawk way: take a simple technique, master it completely, and serve it with pride. The smash burger isn't just a cooking method—it's a philosophy."
     ],
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop",
+    image: "/art6.png",
     category: "Recipes",
     date: "AUG 5, 2024",
     readTime: "5 MIN READ",
