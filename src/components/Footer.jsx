@@ -91,11 +91,36 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-stone-600 text-xs uppercase tracking-wider">© 2024 RedHawks Burger & Kebab.</p>
-          <div className="flex gap-6">
-            <a href="#" className="text-stone-600 hover:text-stone-400 text-xs transition-colors">Privacy</a>
-            <a href="#" className="text-stone-600 hover:text-stone-400 text-xs transition-colors">Terms</a>
+        <div className="pt-8 border-t border-white/5">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-stone-600 text-xs uppercase tracking-wider">© 2024 RedHawks Burger & Kebab.</p>
+            
+            {/* Agency Credit */}
+            <a 
+              href="https://bkkboost.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex flex-col sm:flex-row items-center gap-2 group"
+            >
+              <span className="text-stone-500 text-[10px] uppercase tracking-wider font-light">
+                Managed & distributed by
+              </span>
+              <div className="flex items-center gap-2">
+                <img 
+                  src="/112.png" 
+                  alt="Bangkok Boost Studios" 
+                  className="h-6 w-auto opacity-60 group-hover:opacity-100 transition-opacity"
+                />
+                <span className="text-stone-400 text-xs font-medium tracking-wide group-hover:text-red-500 transition-colors">
+                  Bangkok Boost Studios
+                </span>
+              </div>
+            </a>
+            
+            <div className="flex gap-6">
+              <a href="#" className="text-stone-600 hover:text-stone-400 text-xs transition-colors">Privacy</a>
+              <a href="#" className="text-stone-600 hover:text-stone-400 text-xs transition-colors">Terms</a>
+            </div>
           </div>
         </div>
       </div>
