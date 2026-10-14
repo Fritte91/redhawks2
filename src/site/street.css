@@ -16,6 +16,8 @@
   --muted-on-cream: #5b5148;
   --line: rgba(243, 233, 214, 0.16);
   --line-on-cream: rgba(14, 12, 11, 0.16);
+  /* Between menu rows: a step firmer than the rules inside a row. */
+  --line-on-cream-strong: rgba(14, 12, 11, 0.26);
   --photo-bg: #1b1f24;
   --display: 'Big Shoulders Display', 'Oswald', Impact, sans-serif;
   --body: 'Archivo', system-ui, -apple-system, sans-serif;
@@ -120,6 +122,15 @@
   transform: scale(0.98);
 }
 
+.st-btn--red:active {
+  background: var(--red-deep);
+}
+
+.st-btn--ink-line:active {
+  background: var(--ink);
+  color: var(--cream);
+}
+
 .st-btn--sm {
   min-height: 44px;
   padding: 0 18px;
@@ -131,27 +142,14 @@
   color: var(--cream);
 }
 
-.st-btn--red:hover {
-  background: var(--red-deep);
-}
-
 .st-btn--ink {
   background: var(--ink);
   color: var(--cream);
 }
 
-.st-btn--ink:hover {
-  background: var(--ink-2);
-}
-
 .st-btn--ink-line {
   border: 2px solid var(--ink);
   color: var(--ink);
-}
-
-.st-btn--ink-line:hover {
-  background: var(--ink);
-  color: var(--cream);
 }
 
 .st-tag {
@@ -424,7 +422,6 @@
   border-left: 2px solid var(--cream);
 }
 
-.st-hero__jumps a:hover,
 .st-hero__jumps a:active {
   background: var(--cream);
   color: var(--ink);
@@ -606,7 +603,7 @@
 /* Menu board -------------------------------------------------------------- */
 
 .st-menu {
-  padding: 80px 0 56px;
+  padding: 80px 0 72px;
   background: var(--cream);
   color: var(--ink);
 }
@@ -722,8 +719,8 @@
   grid-template-columns: 64px minmax(0, 1fr);
   align-items: start;
   gap: 14px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line-on-cream);
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line-on-cream-strong);
 }
 
 .st-row__img {
@@ -747,12 +744,13 @@
   letter-spacing: 0.005em;
 }
 
-.st-row__single .st-price {
-  font-size: 28px;
+.st-row__single .st-price,
+.st-bprices .st-price {
+  font-size: 30px;
 }
 
 .st-row__desc {
-  margin-top: 4px;
+  margin-top: 6px;
   color: var(--muted-on-cream);
   font-size: 14px;
   line-height: 1.4;
@@ -768,7 +766,7 @@
 
 .st-bprices__cell {
   grid-row: 1;
-  padding-top: 8px;
+  padding-top: 10px;
 }
 
 .st-bprices__cell--beef { grid-column: 1; }
@@ -781,18 +779,15 @@
 }
 
 .st-bprices dt {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   color: var(--muted-on-cream);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.st-bprices .st-price {
-  font-size: 26px;
-}
 
 /* About ------------------------------------------------------------------- */
 
@@ -850,14 +845,14 @@
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 /* Visit ------------------------------------------------------------------- */
 
 .st-visit {
-  padding: 72px 0 80px;
+  padding: 80px 0;
   background: var(--red);
   color: var(--ink);
 }
@@ -911,9 +906,17 @@
   transition: background-color 0.15s, color 0.15s;
 }
 
-.st-visit__directions:hover {
-  background: var(--cream);
-  color: var(--ink);
+.st-visit__directions:active {
+  background: var(--ink-2);
+}
+
+.st-visit__label {
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .st-visit__address {
@@ -927,7 +930,7 @@
 
 .st-visit__note {
   max-width: 30ch;
-  margin-top: 16px;
+  margin-top: 20px;
   font-size: 19px;
   font-weight: 700;
   line-height: 1.45;
@@ -950,9 +953,9 @@
 }
 
 .st-visit__rows dt {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -1017,10 +1020,6 @@
   font-size: 20px;
   text-transform: uppercase;
   transition: color 0.15s;
-}
-
-.st-footer__links a:hover {
-  color: var(--red);
 }
 
 .st-footer__sign {
@@ -1123,9 +1122,29 @@
     font-size: 56px;
   }
 
+  /* Each card is a subgrid of photo / name / prices rows, so cards side by
+     side share a price line however long their names run. */
   .st-feature__list {
     grid-template-columns: 1fr 1fr;
-    gap: 64px 32px;
+    gap: 0 32px;
+  }
+
+  .st-feature__item,
+  .st-feature__text {
+    display: grid;
+    grid-template-rows: subgrid;
+  }
+
+  .st-feature__item {
+    grid-row: span 3;
+  }
+
+  .st-feature__item:not(:first-child) {
+    padding-top: 64px;
+  }
+
+  .st-feature__text {
+    grid-row: span 2;
   }
 
   .st-feature__item:first-child {
@@ -1142,6 +1161,13 @@
 
   .st-feature__item:not(:first-child) .st-fprices .st-price {
     font-size: 36px;
+  }
+
+  /* Numbers sit in the same corner once cards no longer bleed off alternate edges. */
+  .st-feature__item:nth-child(n) .st-feature__num {
+    top: 16px;
+    right: auto;
+    left: 20px;
   }
 
   .st-rows {
@@ -1218,10 +1244,6 @@
     transition: color 0.15s;
   }
 
-  .st-header__nav > a:not(.st-btn):hover {
-    color: var(--red);
-  }
-
   /* Wordmark left, photo bleeding off the right edge, type overlapping it. */
   .st-hero {
     display: grid;
@@ -1281,7 +1303,7 @@
     font-size: 64px;
   }
 
-  /* Skyline: photos share a baseline, names and prices share a top line. */
+  /* Skyline: photos share a baseline; names, then prices, share a top line. */
   .st-feature {
     padding: 120px 0 140px;
   }
@@ -1296,17 +1318,18 @@
 
   .st-feature__list {
     grid-template-columns: 6fr 3fr 3fr;
-    grid-template-rows: auto auto;
-    gap: 0 40px;
+    grid-template-rows: auto auto auto;
+    column-gap: 40px;
     margin-top: 64px;
   }
 
   .st-feature__item,
   .st-feature__item:first-child {
     grid-column: auto;
-    grid-row: span 2;
-    display: grid;
-    grid-template-rows: subgrid;
+  }
+
+  .st-feature__item:not(:first-child) {
+    padding-top: 0;
   }
 
   .st-feature__img {
@@ -1339,10 +1362,6 @@
 
   .st-feature__item:not(:first-child) .st-fprices .st-price {
     font-size: 32px;
-  }
-
-  .st-feature__item:not(:first-child) .st-fprices--single .st-price {
-    font-size: 40px;
   }
 
   .st-menu {
@@ -1382,10 +1401,6 @@
     font-size: 24px;
   }
 
-  .st-cats a:hover:not([aria-current='true']) {
-    color: var(--red-deep);
-  }
-
   .rh-street .st-cat {
     scroll-margin-top: calc(var(--header-h) + 24px);
   }
@@ -1410,7 +1425,16 @@
   }
 
   .st-row__name {
-    font-size: 30px;
+    font-size: 32px;
+  }
+
+  .st-row__single .st-price,
+  .st-bprices .st-price {
+    font-size: 34px;
+  }
+
+  .st-cat {
+    padding-top: 56px;
   }
 
   .st-about {
@@ -1421,6 +1445,12 @@
     grid-template-columns: 7fr 5fr;
     align-items: end;
     gap: 64px;
+  }
+
+  /* Sized to its 7/12 column ("A BURGER" ≈ 3.5em), so it keeps four lines
+     from 1024px up instead of stacking one word per line. */
+  .st-about__title {
+    font-size: min(168px, calc((min(100vw, 1360px) - 2 * var(--gutter) - 64px) * 7 / 12 / 3.6));
   }
 
   .st-visit {
@@ -1434,13 +1464,30 @@
 
   .st-visit__grid {
     grid-template-columns: 7fr 5fr;
-    align-items: start;
     gap: 56px;
     margin-top: 48px;
   }
 
   .st-visit__map {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
+  }
+
+  /* The details column is framed to the map: a rule level with its top edge,
+     the directions note level with its directions bar. */
+  .st-visit__info {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    border-top: 4px solid var(--ink);
+  }
+
+  .st-visit__note {
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+    max-width: none;
+    margin-top: auto;
+    border-top: 2px solid var(--ink);
   }
 
   .st-visit__address {
@@ -1449,6 +1496,43 @@
 
   .st-footer {
     padding-top: 96px;
+  }
+}
+
+/* Hover: pointer devices only, so a tap never leaves a link stuck in its
+   hover colours. Touch gets the :active states above. --------------------- */
+
+@media (hover: hover) {
+  .st-btn--red:hover {
+    background: var(--red-deep);
+  }
+
+  .st-btn--ink:hover {
+    background: var(--ink-2);
+  }
+
+  .st-btn--ink-line:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .st-hero__jumps a:hover {
+    background: var(--cream);
+    color: var(--ink);
+  }
+
+  .st-visit__directions:hover {
+    background: var(--cream);
+    color: var(--ink);
+  }
+
+  .st-header__nav > a:not(.st-btn):hover,
+  .st-footer__links a:hover {
+    color: var(--red);
+  }
+
+  .st-cats a:hover:not([aria-current='true']) {
+    color: var(--red-deep);
   }
 }
 
@@ -1470,9 +1554,11 @@
   .st-feature__img img {
     transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
+}
 
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
   .st-feature__item:hover .st-feature__img img {
-    transform: scale(1.04);
+    transform: scale(1.03);
   }
 }
 

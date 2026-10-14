@@ -208,12 +208,14 @@ const Featured = () => (
               <span className="st-feature__num" aria-hidden="true">0{i + 1}</span>
             </div>
             <div className="st-feature__text">
-              <p className="st-feature__meta">
-                {categoryLabel(item.category)}
-                {isSpicy(item) && <span className="st-tag">Spicy</span>}
-              </p>
-              <h3 className="st-feature__name">{item.name}</h3>
-              {item.description && <p className="st-feature__desc">{item.description}</p>}
+              <div className="st-feature__head">
+                <p className="st-feature__meta">
+                  {categoryLabel(item.category)}
+                  {isSpicy(item) && <span className="st-tag">Spicy</span>}
+                </p>
+                <h3 className="st-feature__name">{item.name}</h3>
+                {item.description && <p className="st-feature__desc">{item.description}</p>}
+              </div>
               <FeaturePrices prices={item.prices} />
             </div>
           </li>
@@ -346,10 +348,10 @@ const Visit = () => (
           </a>
         </div>
         <div className="st-visit__info">
+          <p className="st-visit__label">Location</p>
           <address className="st-visit__address">
             {restaurant.city}<br />{restaurant.region}
           </address>
-          <p className="st-visit__note">Directions open the RedHawks listing on Google&nbsp;Maps.</p>
           {/* Shown only once the owner has confirmed them (src/shared/restaurant.js). */}
           {(restaurant.phone || restaurant.hours) && (
             <dl className="st-visit__rows">
@@ -370,6 +372,7 @@ const Visit = () => (
           {restaurant.phone && (
             <a href={restaurant.phone.href} className="st-btn st-btn--ink-line st-visit__call">Call the kiosk</a>
           )}
+          <p className="st-visit__note">Directions open the RedHawks listing on Google&nbsp;Maps.</p>
         </div>
       </div>
     </div>
