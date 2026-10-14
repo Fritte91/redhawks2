@@ -1,0 +1,157 @@
+/* BkkBoost palette, sampled from /112.png */
+.bkb-credit {
+  --bkb-navy: #1a3453;
+  --bkb-orange: #e49c41;
+  --bkb-orange-deep: #cd6d33;
+  --bkb-cream: #f5eedf;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+  font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.bkb-credit--cream {
+  background: var(--bkb-cream);
+  color: var(--bkb-navy);
+}
+
+.bkb-credit--navy {
+  background: var(--bkb-navy);
+  color: var(--bkb-cream);
+}
+
+.bkb-credit__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  max-width: 1360px;
+  margin: 0 auto;
+  color: inherit;
+  text-decoration: none;
+}
+
+.bkb-credit__logo {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.bkb-credit--navy .bkb-credit__logo {
+  padding: 3px;
+  border-radius: 50%;
+  background: var(--bkb-cream);
+}
+
+.bkb-credit__text {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.bkb-credit__brand {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--bkb-orange-deep);
+  transition: text-decoration-thickness 0.15s;
+}
+
+.bkb-credit--navy .bkb-credit__brand {
+  color: var(--bkb-orange);
+  text-decoration-color: var(--bkb-orange);
+}
+
+.bkb-credit__arrow {
+  color: var(--bkb-orange-deep);
+  transition: transform 0.15s;
+}
+
+.bkb-credit--navy .bkb-credit__arrow {
+  color: var(--bkb-orange);
+}
+
+.bkb-credit__link:hover .bkb-credit__brand {
+  text-decoration-thickness: 3px;
+}
+
+.bkb-credit__link:hover .bkb-credit__arrow {
+  transform: translate(2px, -2px);
+}
+
+.bkb-credit__link:focus-visible {
+  outline: 3px solid var(--bkb-orange);
+  outline-offset: 4px;
+}
+
+/* Badge: compact signature for dark footers --------------------------------- */
+
+.bkb-badge {
+  --bkb-navy: #1a3453;
+  --bkb-orange: #e49c41;
+  --bkb-cream: #f5eedf;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 18px 10px 10px;
+  border: 1px solid rgba(228, 156, 65, 0.35);
+  border-radius: 6px;
+  background: var(--bkb-navy);
+  color: var(--bkb-cream);
+  font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.bkb-badge:hover {
+  border-color: var(--bkb-orange);
+  background: #1e3c60;
+}
+
+.bkb-badge:focus-visible {
+  outline: 3px solid var(--bkb-orange);
+  outline-offset: 3px;
+}
+
+.bkb-badge__logo {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  padding: 3px;
+  border-radius: 50%;
+  background: var(--bkb-cream);
+  object-fit: contain;
+}
+
+.bkb-badge__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bkb-badge__label {
+  color: rgba(245, 238, 223, 0.72);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.bkb-badge__brand {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.bkb-badge__arrow {
+  margin-left: 4px;
+  color: var(--bkb-orange);
+  transition: transform 0.2s;
+}
+
+.bkb-badge:hover .bkb-badge__arrow {
+  transform: translate(2px, -2px);
+}

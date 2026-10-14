@@ -1,0 +1,1502 @@
+/* ==========================================================================
+   RedHawks — Concept A: Street
+   Scoped to .rh-street. Signage-driven: near-black, strong red, warm cream.
+   ========================================================================== */
+
+.rh-street {
+  --ink: #0e0c0b;
+  --ink-2: #1b1816;
+  --red: #e3241b;
+  --red-deep: #b5180f;
+  --cream: #f3e9d6;
+  --cream-2: #d8cbb4;
+  --muted: #a39788;
+  --muted-on-cream: #5b5148;
+  --line: rgba(243, 233, 214, 0.16);
+  --line-on-cream: rgba(14, 12, 11, 0.16);
+  --photo-bg: #1b1f24;
+  --display: 'Big Shoulders Display', 'Oswald', Impact, sans-serif;
+  --body: 'Archivo', system-ui, -apple-system, sans-serif;
+  --header-h: 60px;
+  --cats-h: 62px;
+  --actionbar-h: 62px;
+  --gutter: 16px;
+
+  min-height: 100vh;
+  overflow-x: clip;
+  padding-bottom: var(--actionbar-h); /* room for the mobile action bar */
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Neutralise the original site's global heading styles (index.css). */
+.rh-street :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.rh-street :where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rh-street :where(ol, ul) {
+  list-style: none;
+}
+
+.rh-street :focus-visible {
+  outline: 3px solid var(--cream);
+  outline-offset: 3px;
+}
+
+.rh-street :where(.st-menu, .st-visit) :focus-visible {
+  outline-color: var(--ink);
+}
+
+.rh-street :where(section[id]) {
+  scroll-margin-top: var(--header-h);
+}
+
+.st-wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.st-red {
+  color: var(--red);
+}
+
+.st-icon {
+  flex: none;
+}
+
+/* Wordmark ---------------------------------------------------------------- */
+
+.st-wordmark {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.st-wordmark__red {
+  color: var(--red);
+}
+
+/* Buttons, tags, prices --------------------------------------------------- */
+
+.st-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 22px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.st-btn:active {
+  transform: scale(0.98);
+}
+
+.st-btn--sm {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 19px;
+}
+
+.st-btn--red {
+  background: var(--red);
+  color: var(--cream);
+}
+
+.st-btn--red:hover {
+  background: var(--red-deep);
+}
+
+.st-btn--ink {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.st-btn--ink:hover {
+  background: var(--ink-2);
+}
+
+.st-btn--ink-line {
+  border: 2px solid var(--ink);
+  color: var(--ink);
+}
+
+.st-btn--ink-line:hover {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.st-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 6px 3px;
+  vertical-align: 0.35em;
+  background: var(--red);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.st-price {
+  display: inline-flex;
+  align-items: flex-start;
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 0.9;
+  white-space: nowrap;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.st-price__cur {
+  margin-left: 2px;
+  color: var(--red);
+  font-size: 0.5em;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Header ------------------------------------------------------------------ */
+
+.st-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 var(--gutter);
+  background: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.st-header__brand {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.st-header__nav {
+  display: none;
+}
+
+.st-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 44px;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.st-toggle__bars {
+  width: 22px;
+  height: 12px;
+  border-block: 3px solid currentColor;
+}
+
+.st-toggle--close {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.st-toggle__x {
+  position: relative;
+  width: 22px;
+  height: 22px;
+}
+
+.st-toggle__x::before,
+.st-toggle__x::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -1px;
+  width: 24px;
+  height: 3px;
+  margin-top: -1.5px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.st-toggle__x::after {
+  transform: rotate(-45deg);
+}
+
+/* Mobile overlay ---------------------------------------------------------- */
+
+.st-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--gutter) calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  background: var(--red);
+  color: var(--ink);
+}
+
+.st-overlay .st-wordmark__red {
+  color: var(--cream);
+}
+
+.st-overlay__top {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+}
+
+.st-overlay__links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+.st-overlay__links a {
+  padding: 8px 0 4px;
+  border-bottom: 2px solid rgba(14, 12, 11, 0.3);
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(64px, 20vw, 120px);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.st-overlay__foot {
+  display: grid;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+/* Hero: a full-viewport poster. Photo behind, identity and menu access on top.
+   ------------------------------------------------------------------------- */
+
+.st-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: calc(100svh - var(--header-h));
+  overflow: hidden;
+}
+
+.st-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--photo-bg);
+}
+
+.st-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 12%;
+}
+
+/* Lets the burger read at the top and the type sit on solid ink below. */
+.st-hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--ink) 0%,
+    var(--ink) 38%,
+    rgba(14, 12, 11, 0.7) 58%,
+    rgba(14, 12, 11, 0) 78%
+  );
+}
+
+.st-hero__body {
+  padding: 120px var(--gutter) 20px;
+}
+
+.st-hero__kicker {
+  display: inline-block;
+  padding: 7px 10px 5px;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* HAWKS measures 2.644em: size the wordmark to fill the content width. */
+.st-hero__title {
+  margin-top: 12px;
+  font-size: min(calc((100vw - 2 * var(--gutter)) / 2.7), 300px);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -0.01em;
+}
+
+.st-hero__line {
+  display: block;
+}
+
+.st-hero__line:first-child {
+  color: var(--red);
+}
+
+.st-hero__lede {
+  max-width: 30ch;
+  margin: 16px 0 20px;
+  color: var(--cream-2);
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.st-hero__ctas {
+  display: grid;
+  gap: 8px;
+}
+
+.st-hero__menu {
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 0 20px;
+  font-size: 25px;
+}
+
+.st-hero__jumps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 2px solid var(--cream);
+}
+
+.st-hero__jumps a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 48px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.st-hero__jumps a + a {
+  border-left: 2px solid var(--cream);
+}
+
+.st-hero__jumps a:hover,
+.st-hero__jumps a:active {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.st-hero__count {
+  align-self: flex-start;
+  margin-top: 13px;
+  color: var(--red);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.st-sticker {
+  position: absolute;
+  top: 16px;
+  right: var(--gutter);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 17px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-align: center;
+  transform: rotate(-8deg);
+}
+
+.st-sticker__big {
+  color: var(--red);
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 0.85;
+}
+
+.st-sticker__small {
+  margin-top: 3px;
+  font-size: 14px;
+}
+
+/* Featured ---------------------------------------------------------------- */
+
+.st-feature {
+  padding: 80px 0 96px;
+}
+
+.st-feature__title {
+  font-size: clamp(76px, 24vw, 200px);
+  font-weight: 900;
+  line-height: 0.82;
+}
+
+.st-feature__list {
+  display: grid;
+  gap: 64px;
+  margin-top: 44px;
+}
+
+.st-feature__img {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--photo-bg);
+}
+
+.st-feature__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile: photos bleed off alternate edges of the screen. */
+.st-feature__item:nth-child(odd) .st-feature__img {
+  margin-left: calc(var(--gutter) * -1);
+}
+
+.st-feature__item:nth-child(even) .st-feature__img {
+  margin-right: calc(var(--gutter) * -1);
+}
+
+.st-feature__num {
+  position: absolute;
+  top: 10px;
+  left: var(--gutter);
+  color: var(--cream);
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 76px;
+  line-height: 0.8;
+}
+
+.st-feature__item:nth-child(even) .st-feature__num {
+  right: var(--gutter);
+  left: auto;
+}
+
+.st-feature__text {
+  padding-top: 18px;
+}
+
+.st-feature__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--red);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.st-feature__meta .st-tag {
+  margin: 0;
+  vertical-align: baseline;
+}
+
+.st-feature__name {
+  margin-top: 8px;
+  font-size: clamp(46px, 13vw, 76px);
+  font-weight: 900;
+  line-height: 1; /* room for accents: Döner, Jalapeño */
+}
+
+.st-feature__desc {
+  margin-top: 10px;
+  color: var(--cream-2);
+}
+
+.st-fprices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+  border-top: 2px solid var(--cream);
+}
+
+.st-fprices > div {
+  padding: 10px 8px 0 0;
+}
+
+.st-fprices > div + div {
+  padding-left: 12px;
+  border-left: 1px solid var(--line);
+}
+
+.st-fprices dt {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.st-fprices .st-price {
+  font-size: 44px;
+}
+
+.st-fprices--single {
+  display: block;
+  padding-top: 10px;
+}
+
+.st-fprices--single .st-price {
+  font-size: 52px;
+}
+
+/* Menu board -------------------------------------------------------------- */
+
+.st-menu {
+  padding: 80px 0 56px;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.st-menu .st-price__cur {
+  color: var(--red-deep);
+}
+
+/* THE MENU measures 3.64em: one line, edge to edge. */
+.st-menu__title {
+  font-size: min(calc((min(100vw, 1360px) - 2 * var(--gutter)) / 3.72), 260px);
+  font-weight: 900;
+  line-height: 0.82;
+}
+
+.st-menu__note {
+  max-width: 42ch;
+  margin-top: 14px;
+  color: var(--muted-on-cream);
+  font-size: 15px;
+}
+
+.st-cats {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 30;
+  display: flex;
+  gap: 8px;
+  margin: 24px calc(var(--gutter) * -1) 0;
+  padding: 8px var(--gutter);
+  overflow-x: auto;
+  background: var(--cream);
+  border-bottom: 2px solid var(--ink);
+  scrollbar-width: none;
+  scroll-padding-inline: var(--gutter);
+}
+
+.st-cats::-webkit-scrollbar {
+  display: none;
+}
+
+.st-cats a {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 2px solid var(--ink);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 19px;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.st-cats a:active {
+  transform: scale(0.97);
+}
+
+.st-cats a[aria-current='true'] {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.st-cats__count {
+  color: var(--red-deep);
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.st-cats a[aria-current='true'] .st-cats__count {
+  color: var(--red);
+}
+
+.st-cat {
+  padding-top: 36px;
+}
+
+.rh-street .st-cat {
+  scroll-margin-top: calc(var(--header-h) + var(--cats-h) + 4px);
+}
+
+.st-cat__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 4px solid var(--ink);
+}
+
+.st-cat__title {
+  font-size: clamp(44px, 13vw, 72px);
+  font-weight: 900;
+  line-height: 0.9;
+}
+
+.st-cat__count {
+  color: var(--red-deep);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.st-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line-on-cream);
+}
+
+.st-row__img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  background: var(--photo-bg);
+}
+
+.st-row__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.st-row__name {
+  font-size: clamp(25px, 7vw, 30px);
+  font-weight: 800;
+  line-height: 1.02; /* room for accents */
+  letter-spacing: 0.005em;
+}
+
+.st-row__single .st-price {
+  font-size: 28px;
+}
+
+.st-row__desc {
+  margin-top: 4px;
+  color: var(--muted-on-cream);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Fixed beef / pork / chicken columns: prices align down the board. */
+.st-bprices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 10px;
+  border-top: 1px solid var(--line-on-cream);
+}
+
+.st-bprices__cell {
+  grid-row: 1;
+  padding-top: 8px;
+}
+
+.st-bprices__cell--beef { grid-column: 1; }
+.st-bprices__cell--pork { grid-column: 2; }
+.st-bprices__cell--chicken { grid-column: 3; }
+
+.st-bprices__cell:not(.st-bprices__cell--beef) {
+  padding-left: 10px;
+  border-left: 1px solid var(--line-on-cream);
+}
+
+.st-bprices dt {
+  margin-bottom: 5px;
+  color: var(--muted-on-cream);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.st-bprices .st-price {
+  font-size: 26px;
+}
+
+/* About ------------------------------------------------------------------- */
+
+.st-about {
+  padding: 88px 0;
+}
+
+.st-about__grid {
+  display: grid;
+  gap: 32px;
+}
+
+.st-about__title {
+  max-width: 11ch;
+  font-size: clamp(56px, 16vw, 168px);
+  font-weight: 900;
+  line-height: 0.84;
+}
+
+.st-about__text p {
+  max-width: 46ch;
+  color: var(--cream-2);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.st-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 36px;
+  border-top: 2px solid var(--cream);
+}
+
+.st-facts li {
+  padding: 14px 10px 0 0;
+}
+
+.st-facts li + li {
+  padding-left: 12px;
+  border-left: 1px solid var(--line);
+}
+
+.st-facts__num {
+  display: block;
+  color: var(--red);
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 64px;
+  line-height: 0.85;
+}
+
+.st-facts__label {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Visit ------------------------------------------------------------------- */
+
+.st-visit {
+  padding: 72px 0 80px;
+  background: var(--red);
+  color: var(--ink);
+}
+
+.st-visit__title {
+  font-size: clamp(72px, 22vw, 200px);
+  font-weight: 900;
+  line-height: 0.82;
+}
+
+.st-visit__grid {
+  display: grid;
+  gap: 28px;
+  margin-top: 32px;
+}
+
+/* Map and its directions button read as one unit. */
+.st-visit__mapcard {
+  display: flex;
+  flex-direction: column;
+  margin: 0 calc(var(--gutter) * -1);
+  background: var(--ink);
+}
+
+.st-visit__map {
+  aspect-ratio: 4 / 3;
+  background: var(--ink);
+}
+
+.st-visit__map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(1) contrast(1.1);
+}
+
+.st-visit__directions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: 0 var(--gutter);
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.st-visit__directions:hover {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.st-visit__address {
+  font-family: var(--display);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.st-visit__rows {
+  margin-top: 24px;
+  border-top: 2px solid var(--ink);
+}
+
+.st-visit__rows > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 60px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(14, 12, 11, 0.3);
+}
+
+.st-visit__rows dt {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.st-visit__rows dd {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.st-visit__rows dd a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.st-tbc {
+  padding: 4px 8px;
+  border: 2px dashed var(--ink);
+  font-size: 14px;
+}
+
+.st-visit__call {
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* Footer ------------------------------------------------------------------ */
+
+.st-footer {
+  padding-top: 64px;
+  background: var(--ink);
+}
+
+/* REDHAWKS measures 4.15em in this face: fit it exactly to the content width. */
+.st-footer__mark .st-wordmark {
+  display: block;
+  font-size: min(calc((100vw - 2 * var(--gutter)) / 4.25), calc((1360px - 2 * var(--gutter)) / 4.25));
+  line-height: 0.8;
+}
+
+.st-footer__row {
+  display: grid;
+  gap: 16px;
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.st-footer__meta {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.st-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+}
+
+.st-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--cream);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.st-footer__links a:hover {
+  color: var(--red);
+}
+
+.st-footer__sign {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 0 32px;
+  text-align: center;
+}
+
+.st-footer__sign p {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+/* Mobile action bar: slides in once the hero buttons are out of view. ----- */
+
+.st-actionbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--ink);
+  border-top: 2px solid var(--red);
+  transform: translateY(100%);
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.st-actionbar.is-visible {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.25s ease, visibility 0s;
+}
+
+.st-actionbar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--actionbar-h);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 21px;
+  text-transform: uppercase;
+}
+
+.st-actionbar a:first-child {
+  background: var(--red);
+}
+
+.st-actionbar a + a {
+  border-left: 1px solid var(--line);
+}
+
+.st-actionbar a:active {
+  background: var(--ink-2);
+}
+
+.st-actionbar a:first-child:active {
+  background: var(--red-deep);
+}
+
+/* Tablet ------------------------------------------------------------------ */
+
+@media (min-width: 768px) {
+  .rh-street {
+    --gutter: 32px;
+  }
+
+  .st-hero__body {
+    max-width: 760px;
+  }
+
+  .st-hero__lede {
+    font-size: 19px;
+  }
+
+  .st-hero__ctas {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .st-sticker {
+    top: 32px;
+    width: 132px;
+    height: 132px;
+    font-size: 22px;
+  }
+
+  .st-sticker__big {
+    font-size: 56px;
+  }
+
+  .st-feature__list {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px 32px;
+  }
+
+  .st-feature__item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .st-feature__item:nth-child(n) .st-feature__img {
+    margin: 0;
+  }
+
+  .st-feature__item:not(:first-child) .st-feature__name {
+    font-size: 44px;
+  }
+
+  .st-feature__item:not(:first-child) .st-fprices .st-price {
+    font-size: 36px;
+  }
+
+  .st-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+
+  .st-row {
+    grid-template-columns: 80px minmax(0, 1fr);
+  }
+
+  .st-row__img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .st-about__title {
+    max-width: 14ch;
+  }
+
+  .st-visit__mapcard {
+    margin: 0;
+  }
+
+  .st-visit__map {
+    aspect-ratio: 16 / 9;
+  }
+
+  .st-footer__row {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .st-footer__sign {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* Desktop ----------------------------------------------------------------- */
+
+@media (min-width: 1024px) {
+  .rh-street {
+    --header-h: 72px;
+    --gutter: 48px;
+    padding-bottom: 0;
+  }
+
+  .st-actionbar,
+  .st-toggle {
+    display: none;
+  }
+
+  .st-wordmark {
+    font-size: 34px;
+  }
+
+  .st-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .st-header__nav > a:not(.st-btn) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 21px;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .st-header__nav > a:not(.st-btn):hover {
+    color: var(--red);
+  }
+
+  /* Wordmark left, photo bleeding off the right edge, type overlapping it. */
+  .st-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .st-hero__media {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* Out of flow so the portrait photo doesn't set the hero's height. */
+  .st-hero__media img {
+    position: absolute;
+    inset: 0;
+    object-position: 50% 35%;
+  }
+
+  .st-hero__media::after {
+    display: none;
+  }
+
+  .st-hero__body {
+    z-index: 1;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    max-width: none;
+    margin-right: -12vw;
+    padding: 64px 0 64px max(var(--gutter), calc((100vw - 1360px) / 2 + var(--gutter)));
+  }
+
+  .st-hero__title {
+    font-size: min(20vw, 340px);
+  }
+
+  .st-hero__lede {
+    font-size: 20px;
+  }
+
+  .st-hero__ctas {
+    max-width: 640px;
+  }
+
+  .st-sticker {
+    top: 40px;
+    right: 40px;
+    width: 156px;
+    height: 156px;
+    font-size: 24px;
+  }
+
+  .st-sticker__big {
+    font-size: 64px;
+  }
+
+  /* Skyline: photos share a baseline, names and prices share a top line. */
+  .st-feature {
+    padding: 120px 0 140px;
+  }
+
+  .st-feature__title {
+    font-size: calc((min(100vw, 1360px) - 2 * var(--gutter)) / 8.7);
+  }
+
+  .st-feature__title br {
+    display: none;
+  }
+
+  .st-feature__list {
+    grid-template-columns: 6fr 3fr 3fr;
+    grid-template-rows: auto auto;
+    gap: 0 40px;
+    margin-top: 64px;
+  }
+
+  .st-feature__item,
+  .st-feature__item:first-child {
+    grid-column: auto;
+    grid-row: span 2;
+    display: grid;
+    grid-template-rows: subgrid;
+  }
+
+  .st-feature__img {
+    align-self: end;
+  }
+
+  .st-feature__text {
+    padding-top: 22px;
+  }
+
+  .st-feature__num {
+    font-size: 96px;
+  }
+
+  .st-feature__item:not(:first-child) .st-feature__num {
+    font-size: 64px;
+  }
+
+  .st-feature__item:first-child .st-feature__name {
+    font-size: 84px;
+  }
+
+  .st-feature__item:not(:first-child) .st-feature__name {
+    font-size: 40px;
+  }
+
+  .st-feature__item:first-child .st-fprices .st-price {
+    font-size: 60px;
+  }
+
+  .st-feature__item:not(:first-child) .st-fprices .st-price {
+    font-size: 32px;
+  }
+
+  .st-feature__item:not(:first-child) .st-fprices--single .st-price {
+    font-size: 40px;
+  }
+
+  .st-menu {
+    padding: 120px 0 96px;
+  }
+
+  .st-menu__note {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .st-menu__layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 56px;
+    margin-top: 48px;
+  }
+
+  .st-cats {
+    top: calc(var(--header-h) + 24px);
+    align-self: start;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-top: 4px solid var(--ink);
+  }
+
+  .st-cats a {
+    justify-content: space-between;
+    min-height: 56px;
+    padding: 0 12px;
+    border: 0;
+    border-bottom: 1px solid var(--line-on-cream);
+    font-size: 24px;
+  }
+
+  .st-cats a:hover:not([aria-current='true']) {
+    color: var(--red-deep);
+  }
+
+  .rh-street .st-cat {
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+
+  .st-cat:first-child {
+    padding-top: 0;
+  }
+
+  .st-rows {
+    column-gap: 48px;
+  }
+
+  .st-row {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 18px;
+    padding: 20px 0;
+  }
+
+  .st-row__img {
+    width: 88px;
+    height: 88px;
+  }
+
+  .st-row__name {
+    font-size: 30px;
+  }
+
+  .st-about {
+    padding: 140px 0;
+  }
+
+  .st-about__grid {
+    grid-template-columns: 7fr 5fr;
+    align-items: end;
+    gap: 64px;
+  }
+
+  .st-visit {
+    padding: 120px 0;
+  }
+
+  /* FIND THE KIOSK measures ~5.6em at this tracking: one line across the section. */
+  .st-visit__title {
+    font-size: calc((min(100vw, 1360px) - 2 * var(--gutter)) / 5.9);
+  }
+
+  .st-visit__grid {
+    grid-template-columns: 7fr 5fr;
+    align-items: start;
+    gap: 56px;
+    margin-top: 48px;
+  }
+
+  .st-visit__map {
+    aspect-ratio: 4 / 3;
+  }
+
+  .st-visit__address {
+    font-size: 36px;
+  }
+
+  .st-footer {
+    padding-top: 96px;
+  }
+}
+
+/* Motion ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .st-hero__line {
+    animation: st-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .st-hero__line:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .st-sticker {
+    animation: st-stamp 0.5s 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  }
+
+  .st-feature__img img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .st-feature__item:hover .st-feature__img img {
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.rh-street) {
+    scroll-behavior: auto;
+  }
+
+  .st-actionbar,
+  .st-actionbar.is-visible {
+    transition: none;
+  }
+}
+
+@keyframes st-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.22em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes st-stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-30deg) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-8deg) scale(1);
+  }
+}
