@@ -1,14 +1,12 @@
 import React, { useRef } from 'react'
 import { menuByCategory, getItem, priceOptions, isSpicy, categoryLabel, menuStats, lowestPrice } from '../shared/menu'
 import { restaurant } from '../shared/restaurant'
-import { usePreviewDocument, useOverlay, useActiveSection, useActiveLinkInView, useInView } from '../shared/hooks'
+import { useOverlay, useActiveSection, useActiveLinkInView, useInView } from '../shared/hooks'
 import BkkBoostCredit from '../shared/BkkBoostCredit'
 import Picture from '../shared/Picture'
 import { HERO, FEATURE, THUMB, FEATURED_IDS, dishName } from '../shared/images'
+import './fonts.css'
 import './street.css'
-
-const FONTS =
-  'https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Archivo:wght@400;500;600&display=swap'
 
 const NAV_LINKS = [
   { href: '#menu', label: 'Menu' },
@@ -134,11 +132,10 @@ const Overlay = ({ close }) => (
 const Hero = ({ ctaRef }) => (
   <section className="st-hero" aria-labelledby="st-hero-title">
     <div className="st-hero__media">
-      {/* Covers the viewport: on tall phones it renders at ~67vh × 2/3 wide, not 100vw. */}
       <Picture
         name={HERO.name}
         widths={HERO.widths}
-        sizes="(min-width: 1024px) 42vw, (max-aspect-ratio: 2/3) 67vh, 100vw"
+        sizes={HERO.sizes}
         fallbackWidth={1280}
         width={1280}
         height={Math.round((1280 * HERO.height) / HERO.width)}
@@ -370,7 +367,8 @@ const Footer = () => (
         </nav>
       </div>
       <div className="st-footer__sign">
-        <p>© {new Date().getFullYear()} {restaurant.name}</p>
+        {/* Prerendered at build time; the year may differ by the time it hydrates. */}
+        <p suppressHydrationWarning>© {new Date().getFullYear()} {restaurant.name}</p>
         <BkkBoostCredit variant="badge" />
       </div>
     </div>
@@ -390,7 +388,6 @@ const StreetHome = () => {
   const [overlayOpen, setOverlayOpen] = useOverlay()
   const heroCtaRef = useRef(null)
   const heroCtaInView = useInView(heroCtaRef)
-  usePreviewDocument({ title: 'RedHawks — Street (preview)', fontsHref: FONTS, background: '#0e0c0b' })
 
   return (
     <div className="rh-street" id="top">

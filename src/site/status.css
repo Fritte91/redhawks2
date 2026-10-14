@@ -1,0 +1,78 @@
+/* 404 / 410 pages in the Street palette and typefaces. */
+
+.rh-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 48px 16px;
+  background: #0e0c0b;
+  color: #f3e9d6;
+  font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+}
+
+.rh-status__mark,
+.rh-status__code,
+.rh-status__heading,
+.rh-status__link {
+  font-family: 'Big Shoulders Display', Impact, sans-serif;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.rh-status__mark {
+  font-size: 30px;
+}
+
+.rh-status__red,
+.rh-status__code {
+  color: #e3241b;
+}
+
+.rh-status__code {
+  margin-top: 48px;
+  font-size: 28px;
+  letter-spacing: 0.06em;
+}
+
+.rh-status__heading {
+  margin-top: 8px;
+  font-size: clamp(64px, 20vw, 200px);
+}
+
+.rh-status__text {
+  max-width: 34ch;
+  margin-top: 20px;
+  color: #d8cbb4;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.rh-status__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 56px;
+  margin-top: 32px;
+  padding: 0 22px;
+  background: #e3241b;
+  color: #f3e9d6;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.rh-status__link:hover {
+  background: #b5180f;
+}
+
+.rh-status__link:focus-visible {
+  outline: 3px solid #f3e9d6;
+  outline-offset: 3px;
+}
+
+@media (min-width: 1024px) {
+  .rh-status {
+    padding: 96px max(48px, calc((100vw - 1360px) / 2 + 48px));
+  }
+}

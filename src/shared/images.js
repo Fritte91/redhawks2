@@ -13,6 +13,8 @@ export const HERO = {
   dir: DIR,
   name: 'hero',
   widths: [640, 960, 1280, 1600],
+  // Covers the viewport: on tall phones it renders at ~67vh × 2/3 wide, not 100vw.
+  sizes: '(min-width: 1024px) 42vw, (max-aspect-ratio: 2/3) 67vh, 100vw',
   width: 3063,
   height: 4594,
 }

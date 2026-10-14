@@ -1,14 +1,19 @@
-// Business facts reused from the existing site (src/components/Footer.jsx).
-// Opening hours have not been confirmed by the owner yet, so they stay null
-// and the previews show a visible "to be confirmed" placeholder instead.
+// Business facts. `confirmed` marks what the owner has verified. Unconfirmed
+// details still appear on the page (they come from the previous site, see
+// src/components/Footer.jsx) but are never published as structured data.
+// Opening hours are unknown: they stay null and the page says "to be confirmed".
 
 export const restaurant = {
   name: 'RedHawks Burger & Kebab',
+  // Confirmed: a burger & kebab kiosk in Hua Hin.
   city: 'Hua Hin',
+  province: 'Prachuap Khiri Khan',
+  country: 'TH',
   region: 'Prachuap Khiri Khan, Thailand',
   phone: {
     display: '+66 81 142 5861',
     href: 'tel:+66811425861',
+    confirmed: false,
   },
   directionsUrl:
     'https://www.google.com/maps/place/RedHawks+Burger+%26+Kebab/@12.5454302,99.9547621,17z/data=!3m1!4b1!4m6!3m5!1s0x30fdab1f656658fd:0x895aeec57703c742!8m2!3d12.545425!4d99.957337!16s%2Fg%2F11vd70rzz8',

@@ -90,3 +90,20 @@ export function useInView(ref) {
 
   return inView
 }
+
+// Title + noindex for pages rendered in the browser (status routes reached via
+// the SPA fallback). Static/prerendered versions carry the same tags in HTML.
+export function useNoIndex(title) {
+  useEffect(() => {
+    const previousTitle = document.title
+    const robots = document.createElement('meta')
+    robots.name = 'robots'
+    robots.content = 'noindex, nofollow'
+    document.head.append(robots)
+    document.title = title
+    return () => {
+      robots.remove()
+      document.title = previousTitle
+    }
+  }, [title])
+}

@@ -1,6 +1,6 @@
 // Read-only view helpers over the existing menu data. Nothing here changes
 // products or prices; it only orders and labels them for display.
-import { menuItems } from '../../data/menuItems'
+import { menuItems } from '../data/menuItems'
 
 export const categories = [
   { id: 'burgers', label: 'Burgers' },

@@ -1,133 +1,57 @@
-# RedHawks - Burger & Kebab Restaurant Website
+# RedHawks Burger & Kebab
 
-A beautiful, modern React website for RedHawks restaurant, featuring a dark theme with red accents, smooth animations, and a fully responsive design.
+Website for RedHawks, a burger and kebab kiosk in Hua Hin, Thailand.
 
-## Features
+Built with React 18 and Vite. The homepage is prerendered to static HTML at
+build time and hydrated in the browser, so the menu, prices and location are
+readable before (and without) JavaScript.
 
-- 🎨 **Modern Design**: Dark theme with elegant red accents and smooth animations
-- 📱 **Fully Responsive**: Works perfectly on desktop, tablet, and mobile devices
-- ⚡ **Fast Performance**: Built with Vite for lightning-fast development and builds
-- 🎯 **Interactive Menu**: Filter menu items by category (Burgers, Kebabs, Sides)
-- 🎭 **Smooth Animations**: Hover effects and transitions throughout
-- 📧 **Newsletter Signup**: Functional newsletter subscription form
-- 🗺️ **Location Map**: Embedded Google Maps with custom styling
-
-## Tech Stack
-
-- **React 18** - Modern React with hooks
-- **Vite** - Fast build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **React Icons** - Beautiful icon library
-- **Google Fonts** - Oswald (headings) & Inter (body)
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Start the development server:
-```bash
-npm run dev
-```
-
-3. Open your browser and navigate to `http://localhost:5173`
-
-### Build for Production
+## Commands
 
 ```bash
-npm run build
+npm ci                    # install
+npm run dev               # dev server (client-rendered)
+SITE_URL=https://<domain> npm run build   # production build → dist/
+npm run preview           # serve dist/ locally
+npm run images            # regenerate public/images/street from the originals
+npm run brand-assets      # regenerate favicon, apple-touch icon and OG image
 ```
 
-The built files will be in the `dist` directory.
+`SITE_URL` is the production origin. The domain is not decided yet; without it
+the build omits canonical/OG URLs and the sitemap. See
+[docs/HOSTING.md](docs/HOSTING.md) for the routing rules the host must apply.
 
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-## Project Structure
+## Structure
 
 ```
-RedHawks/
-├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx      # Navigation bar with mobile menu
-│   │   ├── Hero.jsx         # Hero section with main heading
-│   │   ├── Story.jsx        # "The Origin" story section
-│   │   ├── Menu.jsx         # Menu with filtering functionality
-│   │   ├── Journal.jsx      # Blog/journal articles section
-│   │   ├── Newsletter.jsx   # Newsletter subscription form
-│   │   └── Footer.jsx       # Footer with map and links
-│   ├── data/
-│   │   └── menuItems.js     # Menu items data
-│   ├── App.jsx              # Main app component
-│   ├── main.jsx             # React entry point
-│   └── index.css            # Global styles and Tailwind imports
-├── index.html               # HTML template
-├── package.json             # Dependencies and scripts
-├── vite.config.js           # Vite configuration
-├── tailwind.config.js       # Tailwind CSS configuration
-└── postcss.config.js        # PostCSS configuration
+src/
+  main.jsx            hydrates the prerendered "/" or renders other routes
+  entry-server.jsx    build-time renderer used by scripts/prerender.mjs
+  App.jsx             routes
+  site/               production homepage (Street), SEO, fonts, status pages
+  shared/             menu helpers, business facts, images, hooks, BkkBoost credit
+  data/menuItems.js   the menu: products, categories, prices (THB)
+  previews/editorial/ unlinked design concept (noindex)
+  components/         legacy homepage, not used — see docs/LEGACY.md
+scripts/              prerender, image and brand-asset generation
+assets/               originals kept out of the build (photos, font source)
+public/               served as-is: optimised images, fonts, icons
 ```
 
-## Customization
+## Editing the menu
 
-### Menu Items
+Edit `src/data/menuItems.js`. Prices are numbers in baht, keyed by protein
+(`beef`, `pork`, `chicken`) or `single`. The page, the menu structured data and
+the price columns all derive from this file. If you add a dish, add its image
+to `public/` and run `npm run images`.
 
-Edit `src/data/menuItems.js` to add, remove, or modify menu items.
+## Business details
 
-### Colors & Styling
+`src/shared/restaurant.js` holds the address, phone and map links. Only
+owner-confirmed facts are published as structured data; opening hours are
+unknown and shown as "to be confirmed".
 
-The design uses Tailwind CSS with custom colors. Main colors:
-- Background: `stone-950` (#0c0a09)
-- Accent: `red-600/700` (#dc2626)
-- Text: `stone-200-400` (various shades)
+## Fonts
 
-### Fonts
-
-Fonts are loaded from Google Fonts:
-- **Oswald**: Used for headings (uppercase)
-- **Inter**: Used for body text
-
-## Features in Detail
-
-### Menu Filtering
-
-The menu section includes interactive filtering:
-- Click category buttons to filter items
-- "All Items" shows everything
-- Categories: Burgers, Kebabs, Sides
-
-### Mobile Menu
-
-The navigation includes a responsive mobile menu that toggles on smaller screens.
-
-### Newsletter
-
-The newsletter form includes basic validation and can be connected to your email service.
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## License
-
-This project is private and proprietary.
-
-## Contact
-
-For questions or support, contact: hello@redhawks.com
-
+Big Shoulders Display and Archivo, self-hosted from `public/fonts/` under the
+SIL Open Font License (licence files alongside).

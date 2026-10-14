@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
-import { menuByCategory, getItem, priceOptions, priceText, categoryLabel, isSpicy, menuStats, lowestPrice } from '../shared/menu'
-import { restaurant } from '../shared/restaurant'
-import { usePreviewDocument, useOverlay, useActiveSection, useActiveLinkInView } from '../shared/hooks'
-import BkkBoostCredit from '../shared/BkkBoostCredit'
+import { menuByCategory, getItem, priceOptions, priceText, categoryLabel, isSpicy, menuStats, lowestPrice } from '../../shared/menu'
+import { restaurant } from '../../shared/restaurant'
+import { usePreviewDocument, useOverlay, useActiveSection, useActiveLinkInView } from '../../shared/hooks'
+import BkkBoostCredit from '../../shared/BkkBoostCredit'
 import './editorial.css'
 
 const FONTS =

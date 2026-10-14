@@ -1,23 +1,22 @@
-// Generates responsive AVIF/WebP derivatives for the Street preview.
-// Originals in /public are never modified; output goes to /public/images/street.
+// Generates the responsive AVIF/WebP images served by the site.
+// Originals are never modified; output goes to public/images/street.
 //
-// Requires sharp, which is not a project dependency yet:
-//   SHARP_PATH=/path/to/node_modules/sharp node scripts/optimize-street-images.mjs
-// or, once added as a devDependency, simply:
-//   node scripts/optimize-street-images.mjs
+//   npm run images
+//
+// Sources are looked up in assets/originals (kept out of the build) and then
+// public (originals that the Editorial preview still serves directly).
 
-import { createRequire } from 'node:module'
+import { existsSync } from 'node:fs'
 import { mkdir, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import sharp from 'sharp'
 import { menuItems } from '../src/data/menuItems.js'
-import { HERO, FEATURE, THUMB, LOGO, FEATURED_IDS, dishName } from '../src/previews/shared/images.js'
-
-const require = createRequire(import.meta.url)
-const sharp = require(process.env.SHARP_PATH || 'sharp')
+import { HERO, FEATURE, THUMB, LOGO, FEATURED_IDS, dishName } from '../src/shared/images.js'
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const publicDir = path.join(root, 'public')
+const sourceDirs = [path.join(root, 'assets/originals'), publicDir]
 const outDir = path.join(publicDir, HERO.dir)
 
 // Tuned by eye against the originals: no visible banding in the dark studio
@@ -28,12 +27,19 @@ const QUALITY = {
   thumb: { avif: { quality: 56, effort: 6 }, webp: { quality: 78, effort: 6 } },
 }
 
+const findSource = file => {
+  const name = file.replace(/^\//, '')
+  const dir = sourceDirs.find(d => existsSync(path.join(d, name)))
+  if (!dir) throw new Error(`Source image not found: ${name}`)
+  return path.join(dir, name)
+}
+
 const results = []
 
 async function write(source, name, width, settings, formats = ['avif', 'webp']) {
   for (const format of formats) {
     const file = path.join(outDir, `${name}-${width}.${format}`)
-    await sharp(path.join(publicDir, source))
+    await sharp(findSource(source))
       .resize({ width, withoutEnlargement: true })
       [format](settings[format])
       .toFile(file)
@@ -53,7 +59,7 @@ for (const item of menuItems) {
   }
 }
 
-// Agency logo keeps its transparency; lossless-quality WebP at badge sizes.
+// Agency logo keeps its transparency.
 for (const width of LOGO.widths) {
   await write(LOGO.source, LOGO.name, width, { webp: { quality: 90, alphaQuality: 100, effort: 6 } }, ['webp'])
 }
