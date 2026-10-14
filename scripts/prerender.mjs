@@ -5,11 +5,10 @@
 //   dist/410.html    static "removed" page for retired /article/* URLs.
 //   dist/robots.txt, dist/sitemap.xml
 //
-// The production origin comes from SITE_URL, or on Vercel from the project's
-// production domain (VERCEL_PROJECT_PRODUCTION_URL, a system environment
-// variable), so a custom domain added later is picked up automatically.
-// Without either the build still works but omits canonical, og:url, absolute
-// image URLs and the sitemap instead of guessing a domain.
+// Canonical URLs, og:url, absolute image URLs, JSON-LD and the sitemap always
+// point at the production domain, whichever host serves the build (so the
+// Vercel fallback copy canonicalises to it too). SITE_URL overrides it, e.g.
+// for a local preview.
 
 import { readFile, writeFile, rm } from 'node:fs/promises'
 import path from 'node:path'
@@ -26,10 +25,9 @@ function siteOrigin(value) {
   return url.origin
 }
 
-const vercelDomain = process.env.VERCEL_PROJECT_PRODUCTION_URL
-const siteUrl = siteOrigin(process.env.SITE_URL || (vercelDomain && `https://${vercelDomain}`))
-if (siteUrl) console.log(`[prerender] site URL: ${siteUrl}`)
-else console.warn('[prerender] No SITE_URL: canonical, og:url, og:image and sitemap.xml are omitted.')
+const PRODUCTION_ORIGIN = 'https://redhawks.bkkboost.com'
+const siteUrl = siteOrigin(process.env.SITE_URL || PRODUCTION_ORIGIN)
+console.log(`[prerender] site URL: ${siteUrl}`)
 
 const server = await import(pathToFileURL(path.join(ssrDir, 'entry-server.js')).href)
 const template = await readFile(path.join(dist, 'index.html'), 'utf8')

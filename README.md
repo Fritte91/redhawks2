@@ -1,7 +1,7 @@
 # RedHawks Burger & Kebab
 
 Website for RedHawks, a burger and kebab kiosk in Hua Hin, Thailand.
-Live: https://redhawks2.vercel.app/
+Live: https://redhawks.bkkboost.com/ (Cloudflare)
 
 A single page built with React 18 and Vite. It is prerendered to static HTML
 at build time and hydrated in the browser, so the menu, prices and location
@@ -14,6 +14,7 @@ npm ci                  # install
 npm run dev             # dev server
 npm run build           # production build → dist/ (prerendered)
 npm run preview         # serve dist/ locally
+npm run deploy          # build and deploy to Cloudflare (wrangler)
 npm run images          # regenerate public/images/street from assets/originals
 npm run brand-assets    # regenerate favicon, apple-touch icon and OG image
 ```
@@ -32,8 +33,11 @@ src/
 scripts/              prerender, image and brand-asset generation
 assets/               originals kept out of the build (photos, font source)
 public/               served as-is: optimised images, fonts, icons
-middleware.js         410 Gone for retired /article/* URLs (Vercel)
-vercel.json           build settings, security and cache headers
+worker/index.js       Cloudflare Worker: 410 Gone for retired /article/* URLs
+wrangler.jsonc        Cloudflare config (static assets, 404 page, custom domain)
+public/_headers       security and cache headers on Cloudflare
+middleware.js         Vercel fallback copy: the same 410 handling
+vercel.json           Vercel fallback copy: build, headers, noindex
 ```
 
 ## Editing the menu

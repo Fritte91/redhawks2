@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
+    "deploy": "npm run build && wrangler deploy",
     "images": "node scripts/optimize-street-images.mjs",
     "brand-assets": "node scripts/make-brand-assets.mjs"
   },
@@ -22,6 +23,7 @@
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
     "sharp": "^0.35.5",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "wrangler": "4.151.0"
   }
 }

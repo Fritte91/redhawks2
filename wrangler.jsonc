@@ -1,0 +1,18 @@
+// Cloudflare Workers Static Assets. `npm run deploy` builds and uploads dist/.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "redhawks",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/article", "/article/*", "/404", "/404.html", "/410", "/410.html"]
+  },
+  "routes": [{ "pattern": "redhawks.bkkboost.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true }
+}

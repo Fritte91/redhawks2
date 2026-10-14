@@ -1,64 +1,81 @@
 # Hosting
 
-The site is deployed on Vercel from the `main` branch of
-`github.com/Fritte91/redhawks2` (production: https://redhawks2.vercel.app/).
-It is a static build plus one tiny Routing Middleware for retired URLs.
+Production is **https://redhawks.bkkboost.com/**, served by Cloudflare
+(Workers Static Assets, Worker `redhawks` in the BkkBoost Cloudflare account).
+The site is a static, prerendered build plus a few lines of Worker code for the
+retired `/article/*` URLs.
+
+https://redhawks2.vercel.app/ (Vercel, deployed from `main` by the Vercel Git
+integration) is kept for now as a **fallback copy**. It is marked `noindex` and
+canonicalises to the production domain, so search engines index only one copy.
 
 ## Build
 
-`vercel.json` pins the build so dashboard settings cannot drift from it:
+`npm run build` = client build → SSR build → `scripts/prerender.mjs`, into
+`dist/`. Every canonical URL, `og:url`, absolute image URL, the JSON-LD `url`
+and the sitemap use `https://redhawks.bkkboost.com` (`PRODUCTION_ORIGIN` in
+`scripts/prerender.mjs`), whichever host serves the build. Set `SITE_URL` to
+override it, e.g. for a local preview.
 
-| Setting | Value |
-| --- | --- |
-| Install | `npm ci` |
-| Build | `npm run build` (client build → SSR build → `scripts/prerender.mjs`) |
-| Output | `dist/` |
+## Deploy (Cloudflare)
 
-The production origin used for canonical/Open Graph URLs and the sitemap is
-taken from, in order:
+```bash
+npm ci
+npx wrangler login      # once, with the BkkBoost Cloudflare account
+npm run deploy          # npm run build && wrangler deploy
+```
 
-1. `SITE_URL` (set it in the Vercel project if you want to force a domain),
-2. `VERCEL_PROJECT_PRODUCTION_URL`, Vercel's system variable for the project's
-   production domain — so adding a custom domain later updates the canonical
-   URL on the next deploy automatically.
+Deploys are run from the command line. Pushing to GitHub does **not** deploy to
+Cloudflare (it still updates the Vercel fallback). To deploy on push, connect
+the repository to the `redhawks` Worker in the Cloudflare dashboard (Workers
+Builds: build command `npm run build`, deploy command `npx wrangler deploy`).
 
-With neither, the build still succeeds and simply omits those tags.
+`wrangler.jsonc`:
 
-## Output
-
-| File | Purpose |
-| --- | --- |
-| `index.html` | `/`, fully prerendered (menu, prices, location) with SEO head and JSON-LD. Hydrates. |
-| `404.html` | Static "not found" page, no JavaScript. Vercel serves it with **404** for any missing path. |
-| `410.html` | Static "removed" page, no JavaScript. Served with **410** by `middleware.js`. |
-| `robots.txt`, `sitemap.xml` | Homepage only. |
+| Setting | Value | Why |
+| --- | --- | --- |
+| `assets.directory` | `./dist` | the prerendered build |
+| `assets.not_found_handling` | `404-page` | unknown paths get `dist/404.html` with a real **404** (no catch-all to the homepage) |
+| `assets.html_handling` | `auto-trailing-slash` | `/index.html` redirects to `/` |
+| `assets.run_worker_first` | `/article`, `/article/*`, `/404(.html)`, `/410(.html)` | only these reach `worker/index.js`; everything else is served straight from the asset store |
+| `routes` | `redhawks.bkkboost.com`, `custom_domain: true` | Cloudflare manages the DNS record and certificate |
+| `workers_dev`, `preview_urls` | `false` | no second public copy on `*.workers.dev` |
 
 ## Routing
 
-| Request | Response | How |
-| --- | --- | --- |
-| `/` | `index.html`, 200 | static file |
-| `/article/*` | `410.html`, **410 Gone** + `X-Robots-Tag: noindex` | `middleware.js` (matcher `/article/:path*`) |
-| existing file | the file | static |
-| anything else | `404.html`, **404** | Vercel's default for static output |
-
-There is deliberately **no catch-all rewrite**: unknown URLs must return a real
-404, not the homepage with a 200.
+| Request | Response |
+| --- | --- |
+| `/` | `index.html`, 200 (fully prerendered; hydrates) |
+| existing file | the file, 200 |
+| `/article`, `/article/*` | `410.html`, **410 Gone** + `X-Robots-Tag: noindex` (Worker) |
+| `/404`, `/410` (and `.html`) | the page with its own status, not 200 (Worker) |
+| anything else | `404.html`, **404** |
 
 `/article/*` were the old journal articles. They described things that are not
-true of the business and have no replacement, so 410 (gone on purpose) is used
-instead of a redirect to the homepage, which search engines treat as a soft 404.
+true of the business and have no replacement, so 410 is used instead of a
+redirect to the homepage, which search engines treat as a soft 404.
 
-## Headers (`vercel.json`)
+## Headers
+
+`public/_headers` (copied into `dist/`, not served as a file):
 
 - Security on every response: `Content-Security-Policy` (self-hosted scripts,
   styles, fonts and images; the Google Maps embed as the only frame),
-  `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`,
-  `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`.
-  Vercel adds HSTS itself.
+  `Strict-Transport-Security`, `X-Frame-Options: DENY`,
+  `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`.
+  `worker/index.js` sets the same security headers on the 404/410 responses it
+  builds; keep the two lists in sync.
 - Caching: `/assets/*` (content-hashed) and `/fonts/*` for a year, immutable;
   `/images/*` for 30 days with stale-while-revalidate. HTML is revalidated on
-  every request (Vercel default). If you change an image or font without
+  every request (Cloudflare's default). If you change an image or font without
   renaming it, rename it.
 
-Preview deployments get `X-Robots-Tag: noindex` from Vercel automatically.
+## Vercel fallback
+
+`vercel.json` and `middleware.js` keep the Vercel copy working the same way
+(404 page, 410 for `/article/*`, the same security and cache headers), plus
+`X-Robots-Tag: noindex` on every response. The Vercel build deletes
+`dist/_headers`, which only Cloudflare uses.
+
+To retire it: remove the project in Vercel (or point it at a redirect), then
+delete `vercel.json` and `middleware.js`.
