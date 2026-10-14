@@ -1,12 +1,11 @@
 import React from 'react'
-import { useNoIndex } from '../shared/hooks'
 import { restaurant } from '../shared/restaurant'
 import './fonts.css'
 import './status.css'
 
-// 404 for unknown URLs; 410 for the retired journal articles (/article/:id).
-// Also prerendered to static 404.html / 410.html for the host to serve with
-// the matching HTTP status (see docs/HOSTING.md).
+// Prerendered to static 404.html (unknown URLs) and 410.html (the retired
+// journal at /article/*). The host serves them with the matching HTTP status;
+// see vercel.json, middleware.js and docs/HOSTING.md.
 export const STATUS_COPY = {
   404: {
     title: `Page not found · ${restaurant.name}`,
@@ -22,8 +21,6 @@ export const STATUS_COPY = {
 
 const StatusPage = ({ status }) => {
   const copy = STATUS_COPY[status]
-  useNoIndex(copy.title)
-
   return (
     <main className="rh-status">
       <p className="rh-status__mark">
@@ -32,7 +29,6 @@ const StatusPage = ({ status }) => {
       <p className="rh-status__code">{status}</p>
       <h1 className="rh-status__heading">{copy.heading}</h1>
       <p className="rh-status__text">{copy.text}</p>
-      {/* Full page load, so the prerendered homepage is served. */}
       <a className="rh-status__link" href="/">See the menu</a>
     </main>
   )

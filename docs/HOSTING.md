@@ -1,85 +1,64 @@
 # Hosting
 
-The site is a static build. `npm run build` writes everything to `dist/`; no
-server-side code is needed. The host only has to serve files and apply the
-routing rules below.
+The site is deployed on Vercel from the `main` branch of
+`github.com/Fritte91/redhawks2` (production: https://redhawks2.vercel.app/).
+It is a static build plus one tiny Routing Middleware for retired URLs.
 
 ## Build
 
-```bash
-npm ci
-SITE_URL=https://<production-domain> npm run build
-```
+`vercel.json` pins the build so dashboard settings cannot drift from it:
 
-`SITE_URL` is the production origin. **It has not been decided yet.** Without
-it the build still succeeds but leaves out everything that needs an absolute
-URL — `<link rel="canonical">`, `og:url`, `og:image`, `twitter:image`, the
-Restaurant `url`/`image` and `sitemap.xml` — rather than guessing a domain.
-Set it in the host's build settings once the domain is chosen.
+| Setting | Value |
+| --- | --- |
+| Install | `npm ci` |
+| Build | `npm run build` (client build → SSR build → `scripts/prerender.mjs`) |
+| Output | `dist/` |
+
+The production origin used for canonical/Open Graph URLs and the sitemap is
+taken from, in order:
+
+1. `SITE_URL` (set it in the Vercel project if you want to force a domain),
+2. `VERCEL_PROJECT_PRODUCTION_URL`, Vercel's system variable for the project's
+   production domain — so adding a custom domain later updates the canonical
+   URL on the next deploy automatically.
+
+With neither, the build still succeeds and simply omits those tags.
 
 ## Output
 
 | File | Purpose |
 | --- | --- |
 | `index.html` | `/`, fully prerendered (menu, prices, location) with SEO head and JSON-LD. Hydrates. |
-| `spa.html` | Empty `noindex` shell for client-rendered routes (`/preview/*`). |
-| `404.html` | Static "not found" page, no JavaScript. |
-| `410.html` | Static "removed" page for the retired journal (`/article/*`), no JavaScript. |
-| `robots.txt`, `sitemap.xml` | `sitemap.xml` only when `SITE_URL` is set. |
+| `404.html` | Static "not found" page, no JavaScript. Vercel serves it with **404** for any missing path. |
+| `410.html` | Static "removed" page, no JavaScript. Served with **410** by `middleware.js`. |
+| `robots.txt`, `sitemap.xml` | Homepage only. |
 
-## Routing rules
+## Routing
 
-| Request | Response |
-| --- | --- |
-| `/` | `index.html`, 200 |
-| `/preview/*` | `spa.html`, 200 (rewrite, not redirect) |
-| `/article/*` | `410.html`, **410 Gone** |
-| an existing file | that file |
-| anything else | `404.html`, **404** |
+| Request | Response | How |
+| --- | --- | --- |
+| `/` | `index.html`, 200 | static file |
+| `/article/*` | `410.html`, **410 Gone** + `X-Robots-Tag: noindex` | `middleware.js` (matcher `/article/:path*`) |
+| existing file | the file | static |
+| anything else | `404.html`, **404** | Vercel's default for static output |
 
-Unknown URLs must return a real 404 — do **not** configure a catch-all rewrite
-of every path to `index.html`. (If one is configured anyway, the app still
-behaves: the browser sees the `/` markup does not match the URL and renders the
-correct route client-side, but crawlers would get a 200 for missing pages.)
+There is deliberately **no catch-all rewrite**: unknown URLs must return a real
+404, not the homepage with a 200.
 
-### Why 410 for `/article/*`
+`/article/*` were the old journal articles. They described things that are not
+true of the business and have no replacement, so 410 (gone on purpose) is used
+instead of a redirect to the homepage, which search engines treat as a soft 404.
 
-The old journal articles (`/article/1`–`/article/6`) described things that are
-not true of the business. There is no equivalent content to redirect to, so a
-301 to the homepage would be a soft 404. 410 tells search engines the pages are
-gone on purpose and removes them from the index fastest.
+## Headers (`vercel.json`)
 
-### Host examples
+- Security on every response: `Content-Security-Policy` (self-hosted scripts,
+  styles, fonts and images; the Google Maps embed as the only frame),
+  `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`,
+  `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`.
+  Vercel adds HSTS itself.
+- Caching: `/assets/*` (content-hashed) and `/fonts/*` for a year, immutable;
+  `/images/*` for 30 days with stale-while-revalidate. HTML is revalidated on
+  every request (Vercel default). If you change an image or font without
+  renaming it, rename it.
 
-**Netlify** — `public/_redirects` (copied into `dist/`):
-
-```
-/preview/*   /spa.html   200
-/article/*   /410.html   410
-```
-
-Netlify serves `404.html` automatically for missing files.
-
-**Cloudflare Pages** — `_redirects` supports the `200` rewrite but not custom
-status codes, so `/article/*` needs a small Pages Function (or a Worker) that
-returns `410.html` with status 410. `404.html` is served automatically.
-
-**Vercel** — `vercel.json` rewrites handle `/preview/*` → `/spa.html`; Vercel
-serves `404.html` automatically. A 410 status for `/article/*` requires
-Routing Middleware.
-
-These files are deliberately **not** committed yet because the host has not
-been chosen.
-
-## Caching
-
-- `assets/*` filenames are content-hashed: cache for a year, immutable.
-- `fonts/*` and `images/street/*` are versioned by filename: long cache is safe;
-  rename the file if its content changes.
-- HTML, `robots.txt`, `sitemap.xml`: no cache / revalidate.
-
-## Previews
-
-`/preview/editorial` is an unlinked design concept. It is served from
-`spa.html` (static `noindex`) and also sets `noindex` at runtime.
-`/preview/street` redirects to `/` client-side now that Street is the homepage.
+Preview deployments get `X-Robots-Tag: noindex` from Vercel automatically.

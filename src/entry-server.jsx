@@ -1,19 +1,19 @@
 // Build-time entry for scripts/prerender.mjs (built with `vite build --ssr`).
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { StaticRouter } from 'react-router-dom'
-import { AppRoutes } from './App'
+import StreetHome from './site/StreetHome'
+import StatusPage from './site/StatusPage'
 
-export { homeHead, noindexHead, robotsTxt, sitemapXml } from './site/seo'
+export { homeHead, statusHead, robotsTxt, sitemapXml } from './site/seo'
 export { STATUS_COPY } from './site/StatusPage'
 
-// Same tree as main.jsx, with StaticRouter in place of BrowserRouter.
-export function render(url) {
-  return renderToString(
+// Same tree as main.jsx, so hydration matches.
+export const renderHome = () =>
+  renderToString(
     <React.StrictMode>
-      <StaticRouter location={url}>
-        <AppRoutes />
-      </StaticRouter>
+      <StreetHome />
     </React.StrictMode>
   )
-}
+
+// Static 404 / 410 pages; they ship without JavaScript.
+export const renderStatus = status => renderToString(<StatusPage status={status} />)

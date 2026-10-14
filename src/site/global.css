@@ -1,11 +1,11 @@
 /* ==========================================================================
-   Global base for the production site and previews.
+   Global base for the site.
 
    The reset below is Tailwind CSS v3.4 Preflight (MIT License,
    https://github.com/tailwindlabs/tailwindcss), copied verbatim with Tailwind's
-   default theme values resolved. The Street and Editorial designs were built
-   on top of it, so it is kept byte-for-byte to avoid visual regressions now
-   that the Tailwind build (used only by the legacy homepage) is gone.
+   default theme values resolved. The Street design was built on top of it,
+   so it is kept byte-for-byte to avoid visual regressions now that the
+   Tailwind build (used only by the old homepage) is gone.
    ========================================================================== */
 
 /*

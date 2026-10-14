@@ -25,11 +25,6 @@ export const priceOptions = prices =>
     .sort(([a], [b]) => PROTEIN_ORDER.indexOf(a) - PROTEIN_ORDER.indexOf(b))
     .map(([key, price]) => ({ key, label: PROTEIN_LABELS[key] ?? null, price }))
 
-export const priceText = prices =>
-  priceOptions(prices)
-    .map(({ label, price }) => (label ? `${label} ${price}\u00a0฿` : `${price}\u00a0฿`))
-    .join(' · ')
-
 export const lowestPrice = item => Math.min(...Object.values(item.prices))
 
 export const getItem = id => menuItems.find(item => item.id === id)

@@ -8,6 +8,8 @@
   --ink-2: #1b1816;
   --red: #e3241b;
   --red-deep: #b5180f;
+  /* Brand red, a touch lighter, for small text on ink: 4.8:1 (WCAG AA). */
+  --red-text: #ea3a2f;
   --cream: #f3e9d6;
   --cream-2: #d8cbb4;
   --muted: #a39788;
@@ -157,7 +159,7 @@
   margin-left: 8px;
   padding: 4px 6px 3px;
   vertical-align: 0.35em;
-  background: var(--red);
+  background: var(--red-deep);
   color: var(--cream);
   font-family: var(--body);
   font-size: 11px;
@@ -179,7 +181,7 @@
 
 .st-price__cur {
   margin-left: 2px;
-  color: var(--red);
+  color: var(--red-text);
   font-size: 0.5em;
   font-weight: 700;
   line-height: 1.25;
@@ -431,7 +433,7 @@
 .st-hero__count {
   align-self: flex-start;
   margin-top: 13px;
-  color: var(--red);
+  color: var(--red-text);
   font-family: var(--body);
   font-size: 11px;
   font-weight: 600;
@@ -536,7 +538,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--red);
+  color: var(--red-text);
   font-family: var(--display);
   font-weight: 800;
   font-size: 18px;
@@ -680,7 +682,7 @@
 }
 
 .st-cats a[aria-current='true'] .st-cats__count {
-  color: var(--red);
+  color: var(--red-text);
 }
 
 .st-cat {
@@ -923,6 +925,14 @@
   text-transform: uppercase;
 }
 
+.st-visit__note {
+  max-width: 30ch;
+  margin-top: 16px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .st-visit__rows {
   margin-top: 24px;
   border-top: 2px solid var(--ink);
@@ -958,12 +968,6 @@
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-}
-
-.st-tbc {
-  padding: 4px 8px;
-  border: 2px dashed var(--ink);
-  font-size: 14px;
 }
 
 .st-visit__call {
@@ -1056,6 +1060,10 @@
   transform: none;
   visibility: visible;
   transition: transform 0.25s ease, visibility 0s;
+}
+
+.st-actionbar--two {
+  grid-template-columns: 1fr 1fr;
 }
 
 .st-actionbar a {

@@ -1,9 +1,9 @@
-// Responsive image manifest for the Street preview. The widths listed here are
+// Responsive image manifest for the site. The widths listed here are
 // exactly what scripts/optimize-street-images.mjs generates.
 
 const DIR = 'images/street'
 
-// Street's featured dishes: one burger, one kebab, one plate — chosen for range, not ranked.
+// Featured dishes: one burger, one kebab, one plate — chosen for range, not ranked.
 export const FEATURED_IDS = [3, 12, 16]
 
 // Hero photo (/3.jpg, 3063×4594). Covers the full mobile viewport, so it can

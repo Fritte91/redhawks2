@@ -106,8 +106,8 @@ export function homeHead(siteUrl) {
     .join('\n    ')
 }
 
-// Shell for client-rendered routes (previews) and static status pages: never indexed.
-export function noindexHead(title) {
+// Static 404 / 410 pages: never indexed.
+export function statusHead(title) {
   return [`<title>${escapeAttr(title)}</title>`, '<meta name="robots" content="noindex, nofollow">', ...iconTags].join('\n    ')
 }
 

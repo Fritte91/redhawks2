@@ -1,22 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import StreetHome from './site/StreetHome'
 import './site/global.css'
 
 const container = document.getElementById('root')
 const app = (
   <React.StrictMode>
-    <App />
+    <StreetHome />
   </React.StrictMode>
 )
 
-// The build prerenders "/" into index.html (scripts/prerender.mjs) and marks
-// the root with the route it rendered. Hydrate when that matches the current
-// URL; otherwise (previews, or any route served through an SPA fallback)
-// render from scratch.
-if (container.dataset.prerendered === window.location.pathname) {
+// The production build prerenders the page into index.html
+// (scripts/prerender.mjs), so hydrate it. The dev server serves the bare
+// template, so render from scratch there.
+if (container.firstElementChild) {
   ReactDOM.hydrateRoot(container, app)
 } else {
-  container.replaceChildren()
   ReactDOM.createRoot(container).render(app)
 }

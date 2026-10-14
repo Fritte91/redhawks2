@@ -1,14 +1,15 @@
 // Static prerendering, run by `npm run build` after the client and SSR builds.
 //
 //   dist/index.html  "/" fully rendered (menu, prices, location) + SEO head; hydrates.
-//   dist/spa.html    empty noindex shell for client-rendered routes (/preview/*).
 //   dist/404.html    static "not found" page (no JavaScript).
 //   dist/410.html    static "removed" page for retired /article/* URLs.
 //   dist/robots.txt, dist/sitemap.xml
 //
-// SITE_URL is the production origin, e.g. SITE_URL=https://example.com npm run build.
-// It is not decided yet. Without it the build still works but omits canonical,
-// og:url, absolute image URLs and the sitemap instead of guessing a domain.
+// The production origin comes from SITE_URL, or on Vercel from the project's
+// production domain (VERCEL_PROJECT_PRODUCTION_URL, a system environment
+// variable), so a custom domain added later is picked up automatically.
+// Without either the build still works but omits canonical, og:url, absolute
+// image URLs and the sitemap instead of guessing a domain.
 
 import { readFile, writeFile, rm } from 'node:fs/promises'
 import path from 'node:path'
@@ -25,10 +26,10 @@ function siteOrigin(value) {
   return url.origin
 }
 
-const siteUrl = siteOrigin(process.env.SITE_URL)
-if (!siteUrl) {
-  console.warn('[prerender] SITE_URL is not set: canonical, og:url, og:image and sitemap.xml are omitted.')
-}
+const vercelDomain = process.env.VERCEL_PROJECT_PRODUCTION_URL
+const siteUrl = siteOrigin(process.env.SITE_URL || (vercelDomain && `https://${vercelDomain}`))
+if (siteUrl) console.log(`[prerender] site URL: ${siteUrl}`)
+else console.warn('[prerender] No SITE_URL: canonical, og:url, og:image and sitemap.xml are omitted.')
 
 const server = await import(pathToFileURL(path.join(ssrDir, 'entry-server.js')).href)
 const template = await readFile(path.join(dist, 'index.html'), 'utf8')
@@ -37,15 +38,12 @@ for (const marker of ['<!--app-head-->', '<div id="root"><!--app-html--></div>']
   if (!template.includes(marker)) throw new Error(`index.html is missing ${marker}`)
 }
 
-function page({ head, html = '', prerendered = '', scripts = true }) {
+function page({ head, html, scripts = true }) {
   let out = template
     .replace(/<!--.*?app-head \(scripts\/prerender\.mjs\)\. -->\s*/s, '')
     .replace(/<title>.*?<\/title>\s*/s, '')
     .replace('<!--app-head-->', head)
-    .replace(
-      '<div id="root"><!--app-html--></div>',
-      `<div id="root"${prerendered ? ` data-prerendered="${prerendered}"` : ''}>${html}</div>`
-    )
+    .replace('<div id="root"><!--app-html--></div>', `<div id="root">${html}</div>`)
   if (!scripts) {
     out = out.replace(/\s*<script type="module"[^>]*><\/script>/g, '').replace(/\s*<link rel="modulepreload"[^>]*>/g, '')
   }
@@ -53,10 +51,9 @@ function page({ head, html = '', prerendered = '', scripts = true }) {
 }
 
 const files = {
-  'index.html': page({ head: server.homeHead(siteUrl), html: server.render('/'), prerendered: '/' }),
-  'spa.html': page({ head: server.noindexHead('RedHawks Burger & Kebab') }),
-  '404.html': page({ head: server.noindexHead(server.STATUS_COPY[404].title), html: server.render('/404'), scripts: false }),
-  '410.html': page({ head: server.noindexHead(server.STATUS_COPY[410].title), html: server.render('/article/retired'), scripts: false }),
+  'index.html': page({ head: server.homeHead(siteUrl), html: server.renderHome() }),
+  '404.html': page({ head: server.statusHead(server.STATUS_COPY[404].title), html: server.renderStatus(404), scripts: false }),
+  '410.html': page({ head: server.statusHead(server.STATUS_COPY[410].title), html: server.renderStatus(410), scripts: false }),
   'robots.txt': server.robotsTxt(siteUrl),
 }
 if (siteUrl) files['sitemap.xml'] = server.sitemapXml(siteUrl)

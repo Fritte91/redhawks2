@@ -3,8 +3,7 @@
 //
 //   npm run images
 //
-// Sources are looked up in assets/originals (kept out of the build) and then
-// public (originals that the Editorial preview still serves directly).
+// Sources are the untouched originals in assets/originals (kept out of the build).
 
 import { existsSync } from 'node:fs'
 import { mkdir, stat } from 'node:fs/promises'
@@ -16,7 +15,7 @@ import { HERO, FEATURE, THUMB, LOGO, FEATURED_IDS, dishName } from '../src/share
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const publicDir = path.join(root, 'public')
-const sourceDirs = [path.join(root, 'assets/originals'), publicDir]
+const sourceDirs = [path.join(root, 'assets/originals')]
 const outDir = path.join(publicDir, HERO.dir)
 
 // Tuned by eye against the originals: no visible banding in the dark studio

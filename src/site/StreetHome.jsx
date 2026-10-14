@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { menuByCategory, getItem, priceOptions, isSpicy, categoryLabel, menuStats, lowestPrice } from '../shared/menu'
 import { restaurant } from '../shared/restaurant'
 import { useOverlay, useActiveSection, useActiveLinkInView, useInView } from '../shared/hooks'
@@ -83,7 +83,7 @@ const BoardPrices = ({ prices }) => (
   </dl>
 )
 
-const Header = ({ overlayOpen, setOverlayOpen }) => (
+const Header = ({ overlayOpen, setOverlayOpen, toggleRef }) => (
   <header className="st-header">
     <a href="#top" className="st-header__brand" aria-label="RedHawks, back to top">
       <Wordmark />
@@ -92,9 +92,16 @@ const Header = ({ overlayOpen, setOverlayOpen }) => (
       {NAV_LINKS.map(link => (
         <a key={link.href} href={link.href}>{link.label}</a>
       ))}
-      <a href={restaurant.phone.href} className="st-btn st-btn--red st-btn--sm">Call</a>
+      {restaurant.phone ? (
+        <a href={restaurant.phone.href} className="st-btn st-btn--red st-btn--sm">Call</a>
+      ) : (
+        <a href={restaurant.directionsUrl} target="_blank" rel="noopener noreferrer" className="st-btn st-btn--red st-btn--sm">
+          Directions
+        </a>
+      )}
     </nav>
     <button
+      ref={toggleRef}
       type="button"
       className="st-toggle"
       aria-label="Open navigation"
@@ -121,8 +128,15 @@ const Overlay = ({ close }) => (
       ))}
     </nav>
     <div className="st-overlay__foot">
-      <a href={restaurant.phone.href} className="st-btn st-btn--ink">Call {restaurant.phone.display}</a>
-      <a href={restaurant.directionsUrl} target="_blank" rel="noopener noreferrer" className="st-btn st-btn--ink-line">
+      {restaurant.phone && (
+        <a href={restaurant.phone.href} className="st-btn st-btn--ink">Call {restaurant.phone.display}</a>
+      )}
+      <a
+        href={restaurant.directionsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`st-btn ${restaurant.phone ? 'st-btn--ink-line' : 'st-btn--ink'}`}
+      >
         Directions <ArrowOut />
       </a>
     </div>
@@ -335,17 +349,27 @@ const Visit = () => (
           <address className="st-visit__address">
             {restaurant.city}<br />{restaurant.region}
           </address>
-          <dl className="st-visit__rows">
-            <div>
-              <dt>Phone</dt>
-              <dd><a href={restaurant.phone.href}>{restaurant.phone.display}</a></dd>
-            </div>
-            <div>
-              <dt>Opening hours</dt>
-              <dd><span className="st-tbc">To be confirmed</span></dd>
-            </div>
-          </dl>
-          <a href={restaurant.phone.href} className="st-btn st-btn--ink-line st-visit__call">Call the kiosk</a>
+          <p className="st-visit__note">Directions open the RedHawks listing on Google&nbsp;Maps.</p>
+          {/* Shown only once the owner has confirmed them (src/shared/restaurant.js). */}
+          {(restaurant.phone || restaurant.hours) && (
+            <dl className="st-visit__rows">
+              {restaurant.phone && (
+                <div>
+                  <dt>Phone</dt>
+                  <dd><a href={restaurant.phone.href}>{restaurant.phone.display}</a></dd>
+                </div>
+              )}
+              {restaurant.hours && (
+                <div>
+                  <dt>Opening hours</dt>
+                  <dd>{restaurant.hours}</dd>
+                </div>
+              )}
+            </dl>
+          )}
+          {restaurant.phone && (
+            <a href={restaurant.phone.href} className="st-btn st-btn--ink-line st-visit__call">Call the kiosk</a>
+          )}
         </div>
       </div>
     </div>
@@ -369,7 +393,7 @@ const Footer = () => (
       <div className="st-footer__sign">
         {/* Prerendered at build time; the year may differ by the time it hydrates. */}
         <p suppressHydrationWarning>© {new Date().getFullYear()} {restaurant.name}</p>
-        <BkkBoostCredit variant="badge" />
+        <BkkBoostCredit />
       </div>
     </div>
   </footer>
@@ -377,21 +401,39 @@ const Footer = () => (
 
 // Appears once the hero's own menu buttons have scrolled out of view.
 const ActionBar = ({ visible }) => (
-  <nav className={`st-actionbar${visible ? ' is-visible' : ''}`} aria-label="Quick actions">
+  <nav
+    className={`st-actionbar${restaurant.phone ? '' : ' st-actionbar--two'}${visible ? ' is-visible' : ''}`}
+    aria-label="Quick actions"
+  >
     <a href="#menu">Menu</a>
-    <a href={restaurant.phone.href}>Call</a>
+    {restaurant.phone && <a href={restaurant.phone.href}>Call</a>}
     <a href={restaurant.directionsUrl} target="_blank" rel="noopener noreferrer">Directions</a>
   </nav>
 )
 
 const StreetHome = () => {
   const [overlayOpen, setOverlayOpen] = useOverlay()
+  const rootRef = useRef(null)
+  const toggleRef = useRef(null)
   const heroCtaRef = useRef(null)
   const heroCtaInView = useInView(heroCtaRef)
 
+  // Modal navigation: make everything behind it inert while open, and return
+  // focus to the menu button when it closes.
+  useEffect(() => {
+    if (!overlayOpen) return
+    const background = [...rootRef.current.children].filter(el => el.id !== 'st-overlay')
+    background.forEach(el => el.setAttribute('inert', ''))
+    const toggle = toggleRef.current
+    return () => {
+      background.forEach(el => el.removeAttribute('inert'))
+      toggle?.focus({ preventScroll: true })
+    }
+  }, [overlayOpen])
+
   return (
-    <div className="rh-street" id="top">
-      <Header overlayOpen={overlayOpen} setOverlayOpen={setOverlayOpen} />
+    <div className="rh-street" id="top" ref={rootRef}>
+      <Header overlayOpen={overlayOpen} setOverlayOpen={setOverlayOpen} toggleRef={toggleRef} />
       {overlayOpen && <Overlay close={() => setOverlayOpen(false)} />}
       <main>
         <Hero ctaRef={heroCtaRef} />

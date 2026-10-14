@@ -1,32 +1,5 @@
 import { useEffect, useState } from 'react'
 
-// Per-preview document setup: title, fonts, page background and noindex.
-// Everything is restored on unmount so the original site is unaffected.
-export function usePreviewDocument({ title, fontsHref, background }) {
-  useEffect(() => {
-    const previousTitle = document.title
-    const previousBackground = document.body.style.backgroundColor
-
-    const fonts = document.createElement('link')
-    fonts.rel = 'stylesheet'
-    fonts.href = fontsHref
-    const robots = document.createElement('meta')
-    robots.name = 'robots'
-    robots.content = 'noindex, nofollow'
-    document.head.append(fonts, robots)
-
-    document.title = title
-    document.body.style.backgroundColor = background
-
-    return () => {
-      fonts.remove()
-      robots.remove()
-      document.title = previousTitle
-      document.body.style.backgroundColor = previousBackground
-    }
-  }, [title, fontsHref, background])
-}
-
 // Full-screen mobile navigation: locks page scroll and closes on Escape.
 export function useOverlay() {
   const [open, setOpen] = useState(false)
@@ -89,21 +62,4 @@ export function useInView(ref) {
   }, [ref])
 
   return inView
-}
-
-// Title + noindex for pages rendered in the browser (status routes reached via
-// the SPA fallback). Static/prerendered versions carry the same tags in HTML.
-export function useNoIndex(title) {
-  useEffect(() => {
-    const previousTitle = document.title
-    const robots = document.createElement('meta')
-    robots.name = 'robots'
-    robots.content = 'noindex, nofollow'
-    document.head.append(robots)
-    document.title = title
-    return () => {
-      robots.remove()
-      document.title = previousTitle
-    }
-  }, [title])
 }

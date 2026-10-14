@@ -1,54 +1,26 @@
-# Legacy code and assets
+# Removed legacy code
 
-The original "Spirit of the Fire" homepage and journal are no longer routed or
-bundled. Nothing outside `src/components/` imports them (checked with
-`grep -rnE "from ['\"][./]*(components/|data/articles|index\.css)" src`), and
-none of their code or strings appear in `dist/assets`. They are kept in the
-repository until removal is approved.
+The original "Spirit of the Fire" site was replaced by the Street design in
+the production release. Everything below was removed after confirming nothing
+imported it and none of it appeared in the build. It remains in Git history:
+the last commit containing all of it is tagged `checkpoint/phase2-complete`.
 
-## Source (unused, safe to delete together)
+## Removed
 
-| Path | Was |
+| What | Notes |
 | --- | --- |
-| `src/components/Home.jsx` | Old homepage composition |
-| `src/components/Navbar.jsx`, `Hero.jsx`, `Story.jsx`, `Menu.jsx`, `Journal.jsx`, `Newsletter.jsx`, `Footer.jsx` | Old homepage sections |
-| `src/components/ArticleReader.jsx`, `src/data/articles.js` | Journal article pages (`/article/:id`, now 410) |
-| `src/index.css`, `tailwind.config.js` | Tailwind build used only by the above |
+| `src/components/*` | Old homepage, navbar, hero, story, menu, journal, newsletter, footer, article reader |
+| `src/data/articles.js` | Journal articles. Their URLs (`/article/*`) now answer 410 Gone |
+| `src/index.css`, `tailwind.config.js` | Tailwind build. Its base reset is kept verbatim in `src/site/global.css` |
+| `src/previews/editorial/*`, `src/App.jsx` | The Editorial design concept and the router that served it |
+| `react-router-dom`, `react-icons`, `tailwindcss` | Only used by the code above |
+| `eslint` and plugins, `npm run lint` | There was never an ESLint config, so lint could not run |
 
-`src/components/Home.jsx` also has an uncommitted one-line change (a trailing
-blank line) that predates this work; it was left untouched.
+The previous homepage had one uncommitted local change (a trailing blank line
+in `src/components/Home.jsx`). It was saved with `git stash` before removal.
 
-## Dependencies only the legacy code uses
+## Kept
 
-| Package | Notes |
-| --- | --- |
-| `react-icons` | Imported only by `src/components/*`. Remove with them. |
-| `tailwindcss` | Only `src/index.css` used it. Also remove the `tailwindcss` entry from `postcss.config.js` (keep `autoprefixer`). |
-
-`eslint` and its plugins are listed, but the repository has never had an
-ESLint config, so `npm run lint` does not run. Either add a config or remove
-the script and packages.
-
-## Assets
-
-Moved out of `public/` (so they no longer ship in the build) into
-`assets/originals/`, unchanged:
-
-| File | Was used by |
-| --- | --- |
-| `3.jpg` | Source of the optimised hero images (`npm run images`) and the OG image |
-| `1.jpg`, `2.jpg`, `5.jpg` | Old hero / story photos, plus an unused one |
-| `2.png`, `3.png`, `11.png` | Unused BkkBoost logo variants |
-| `art1.png`–`art6.png` | Journal article images |
-| `korv.png` | Unused dish render |
-
-Still in `public/`, needed only by the Editorial preview (about 27 MB of the
-30 MB build):
-
-- the 18 dish PNGs referenced by `src/data/menuItems.js` (also the sources for
-  `npm run images`)
-- `4.jpg` (Editorial "About" photo)
-- `112.png` (BkkBoost logo in the Editorial credit band)
-
-If the Editorial preview is retired, move these to `assets/originals/` as well
-and update `menuItems.js` image paths if needed; the build drops to about 3 MB.
+All original photographs and renders are in `assets/originals/`, unchanged and
+outside the build. They are the sources for `npm run images` (dish renders,
+hero `3.jpg`, BkkBoost logo `112.png`) and `npm run brand-assets` (`3.jpg`).
